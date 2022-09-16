@@ -1,5 +1,6 @@
 package com.bhaskar.corvasnotes.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,9 +11,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
@@ -23,7 +28,7 @@ import com.bhaskar.corvasnotes.listeners.NotesListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NotesListener {
+public class MainActivity extends AppCompatActivity implements NotesListener, PopupMenu.OnMenuItemClickListener {
 
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
@@ -34,6 +39,24 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     public static final int REQUEST_CODE_ADD_NOTE = 1;
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTE = 3;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.note_options_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemViewNotes:
+                return true;
+            case R.id.itemSortNotes:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +78,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         notesRecyclerView.setAdapter(notesAdapter);
 
         getNotes(REQUEST_CODE_SHOW_NOTE);
+
     }
 
     @Override
@@ -82,14 +106,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 @Override
                 protected void onPostExecute(List<Note> notes) {
                     super.onPostExecute(notes);
-//                    if (noteList.size() == 0) {
-//                        noteList.addAll(notes);
-//                        notesAdapter.notifyDataSetChanged();
-//                    } else {
-//                        noteList.add(0, notes.get(0));
-//                        notesAdapter.notifyItemInserted(0 );
-//                    }
-//                    notesRecyclerView.smoothScrollToPosition(0);
 
                     if (requestCode == REQUEST_CODE_SHOW_NOTE) {
                         noteList.addAll(notes);
@@ -126,5 +142,24 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     public void setNoteClickedPosition(int noteClickedPosition) {
         this.noteClickedPosition = noteClickedPosition;
+    }
+
+    public void showPopup(View view) {
+        PopupMenu popupMenu = new PopupMenu(this,view);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.inflate(R.menu.note_options_menu);
+        popupMenu.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()){
+            case R.id.itemViewNotes:
+                return true;
+            case R.id.itemSortNotes:
+                return true;
+            default:
+                return false;
+        }
     }
 }
