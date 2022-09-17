@@ -19,3 +19,25 @@
     <color name = "colorDelete"> #FF4842 </color>
     <color name = "colorSearchBackground"> #333333 </color>
 </resources>
+
+
+<!--<resources>-->
+<!--<color name = "colorPrimary">#FFFFFF</color>-->
+<!--<color name = "colorPrimaryDark">#FFFFFF</color>-->
+<!--<color name = "colorAccent"> #FDBE3B </color>-->
+<!--<color name = "colorWhite">#000000</color>-->
+<!--<color name = "colorSearchIcon"> #DBDBDB </color>-->
+<!--<color name = "colorTextHint"> #7B7B7B </color>-->
+<!--<color name = "colorQuickActionsBackground">#878385</color>-->
+<!--<color name = "colorIcons">#292828</color>-->
+<!--<color name = "colorTextSubtitle"> #CECECE </color>-->
+<!--<color name = "colorDefaultNoteColor">#CFCECE</color>-->
+<!--<color name = "colorNoteSubtitleText">#000000</color>-->
+<!--<color name = "colorMiscellaneousBackground">#B1B0B0</color>-->
+<!--<color name = "colorNoteColor2"> #FDBE3B </color>-->
+<!--<color name = "colorNoteColor3"> #FF4842 </color>-->
+<!--<color name = "colorNoteColor4"> #3A52Fc </color>-->
+<!--<color name = "colorNoteColor5"> #4CAF50</color>-->
+<!--<color name = "colorDelete"> #FF4842 </color>-->
+<!--<color name = "colorSearchBackground">#AEABAB</color>-->
+<!--</resources>-->
