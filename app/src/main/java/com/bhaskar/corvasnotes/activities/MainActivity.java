@@ -3,11 +3,13 @@ package com.bhaskar.corvasnotes.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
@@ -40,23 +43,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTE = 3;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.note_options_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemViewNotes:
-                return true;
-            case R.id.itemSortNotes:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    boolean isSwitchOn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +65,44 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
         notesRecyclerView.setAdapter(notesAdapter);
 
         getNotes(REQUEST_CODE_SHOW_NOTE);
+
+//        Set Preference for light Dark Mode (Previous Selection)
+        final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
+        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
+        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
+
+        if (isNightModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
+        //        Day Night Mode switch
+        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
+        lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                if (isSwitchOn) {
+//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+//                    lottieSwitchButton.playAnimation();
+//                    isSwitchOn = false;
+//                } else {
+//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+//                    lottieSwitchButton.playAnimation();
+//                    isSwitchOn = true;
+//                }
+                if (isNightModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    sharedPrefsEdit.putBoolean("Night Mode",false);
+                    sharedPrefsEdit.apply();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    sharedPrefsEdit.putBoolean("Night Mode",true);
+                    sharedPrefsEdit.apply();
+                }
+
+            }
+        });
 
     }
 
@@ -142,6 +167,25 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
 
     public void setNoteClickedPosition(int noteClickedPosition) {
         this.noteClickedPosition = noteClickedPosition;
+    }
+
+//    Popup Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.note_options_menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.itemViewNotes:
+                return true;
+            case R.id.itemSortNotes:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void showPopup(View view) {
