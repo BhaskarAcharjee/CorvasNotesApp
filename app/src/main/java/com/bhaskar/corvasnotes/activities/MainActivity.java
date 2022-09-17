@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
     public static final int REQUEST_CODE_UPDATE_NOTE = 2;
     public static final int REQUEST_CODE_SHOW_NOTE = 3;
 
-    boolean isSwitchOn = true;
+    boolean isSwitchOn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
         notesAdapter = new NotesAdapter(noteList,this);
         notesRecyclerView.setAdapter(notesAdapter);
 
-        getNotes(REQUEST_CODE_SHOW_NOTE);
+        getNotes(REQUEST_CODE_SHOW_NOTE,false);
 
 //        Set Preference for light Dark Mode (Previous Selection)
         final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
@@ -82,24 +82,24 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
         lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isSwitchOn) {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = false;
-//                } else {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = true;
-//                }
-                if (isNightModeOn) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    sharedPrefsEdit.putBoolean("Night Mode",false);
-                    sharedPrefsEdit.apply();
+                if (isSwitchOn) {
+                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+                    lottieSwitchButton.playAnimation();
+                    isSwitchOn = false;
                 } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    sharedPrefsEdit.putBoolean("Night Mode",true);
-                    sharedPrefsEdit.apply();
+                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+                    lottieSwitchButton.playAnimation();
+                    isSwitchOn = true;
                 }
+//                if (isNightModeOn) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                    sharedPrefsEdit.putBoolean("Night Mode",false);
+//                    sharedPrefsEdit.apply();
+//                } else {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    sharedPrefsEdit.putBoolean("Night Mode",true);
+//                    sharedPrefsEdit.apply();
+//                }
 
             }
         });
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
         startActivityForResult(intent,REQUEST_CODE_UPDATE_NOTE);
     }
 
-    private void getNotes(final int requestCode) {
+    private void getNotes(final int requestCode, final boolean isNoteDeleted) {
 
             @SuppressLint("StaticFieldLeak")
             class GetNotesTask extends AsyncTask<Void, Void, List<Note>> {
@@ -141,8 +141,13 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
                         notesRecyclerView.smoothScrollToPosition(0);
                     } else if (requestCode == REQUEST_CODE_UPDATE_NOTE) {
                         noteList.remove(noteClickedPosition);
-                        noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
-                        notesAdapter.notifyItemChanged(noteClickedPosition);
+
+                        if (isNoteDeleted){
+                            notesAdapter.notifyItemRemoved(noteClickedPosition);
+                        }else {
+                            noteList.add(noteClickedPosition, notes.get(noteClickedPosition));
+                            notesAdapter.notifyItemChanged(noteClickedPosition);
+                        }
                     }
                 }
             }
@@ -153,10 +158,10 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
     super.onActivityResult(requestCode, resultCode, data);
     if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
-            getNotes(REQUEST_CODE_ADD_NOTE);
+            getNotes(REQUEST_CODE_ADD_NOTE,false);
         }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if (data != null) {
-                getNotes(REQUEST_CODE_UPDATE_NOTE);
+                getNotes(REQUEST_CODE_UPDATE_NOTE,data.getBooleanExtra("isNoteDeleted",false));
             }
         }
     }

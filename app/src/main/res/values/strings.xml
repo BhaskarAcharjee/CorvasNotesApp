@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Corvas Notes</string>
     <string name="search_notes">Search Notes...</string>
     <string name="note_title">Note Title</string>
