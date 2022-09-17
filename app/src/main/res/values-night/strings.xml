@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Corvas Notes</string>
+    <string name="search_notes">Search Notes...</string>
+    <string name="note_title">Note Title</string>
+    <string name="note_subtitle">Note Subtitle</string>
+    <string name="input_note">Type note Here...</string>
+    <string name="miscellaneous">Options</string>
+    <string name="pick_color">Pick Color</string>
+    <string name="add_image">Add Image</string>
+    <string name="add_subtitle">Add Subtitle</string>
+    <string name="add_url">Add URL</string>
+    <string name="cancel_dialog">CANCEL</string>
+    <string name="add">ADD</string>
+    <string name="enter_url">Enter URL</string>
+</resources>
