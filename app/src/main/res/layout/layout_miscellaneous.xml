@@ -311,7 +311,8 @@
             android:includeFontPadding="false"
             android:text="Delete Note"
             android:textColor="@color/colorDelete"
-            android:textSize="@dimen/_12ssp"/>
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

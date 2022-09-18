@@ -5,6 +5,6 @@
     <solid android:color="@color/colorDefaultNoteColor"/>
     <corners android:topRightRadius="@dimen/_6sdp"
         android:topLeftRadius="@dimen/_6sdp"
-        android:bottomRightRadius="@dimen/_30sdp"
+        android:bottomRightRadius="@dimen/_25sdp"
         android:bottomLeftRadius="@dimen/_6sdp"/>
 </shape>

@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
             public void afterTextChanged(Editable editable) {
                 if (noteList.size() != 0){
                     notesAdapter.searchNotes(editable.toString());
+                    findViewById(R.id.clearSearch).setVisibility(View.VISIBLE);
                 }
-
             }
         });
 
@@ -125,6 +125,19 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
 //                    sharedPrefsEdit.apply();
 //                }
 
+            }
+        });
+
+//        Clear Search Box Text
+//        if (inputSearch.getText()!=null){
+//            findViewById(R.id.clearSearch).setVisibility(View.VISIBLE);
+//        }
+        ImageView clearSearch = findViewById(R.id.clearSearch);
+        clearSearch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputSearch.getText().clear();
+                clearSearch.setVisibility(View.GONE);
             }
         });
 

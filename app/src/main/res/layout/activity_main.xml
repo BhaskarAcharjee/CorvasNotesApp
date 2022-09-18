@@ -67,7 +67,7 @@
 
         <EditText
             android:id="@+id/inputSearch"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/_218sdp"
             android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:background="@null"
@@ -79,6 +79,16 @@
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorTextHint"
             android:textSize="@dimen/_13ssp" />
+
+        <ImageView
+            android:id="@+id/clearSearch"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_clear_search"
+            android:visibility="gone"
+            app:tint="@color/colorSearchIcon" />
 
     </LinearLayout>
 
