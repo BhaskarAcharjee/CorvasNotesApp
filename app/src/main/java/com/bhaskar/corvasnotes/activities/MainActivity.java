@@ -2,8 +2,11 @@ package com.bhaskar.corvasnotes.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -14,7 +17,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,7 +36,7 @@ import com.bhaskar.corvasnotes.listeners.NotesListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NotesListener, PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements NotesListener {
 
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
@@ -52,6 +54,17 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar =  findViewById(R.id.toolbar_home);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.app_name);
+
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
         imageAddNoteMain.setOnClickListener(view -> startActivityForResult(
@@ -212,40 +225,40 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
     }
 
 //    Popup Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.note_options_menu,menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.note_options_menu,menu);
+//        return true;
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemViewNotes:
-                return true;
-            case R.id.itemSortNotes:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.itemViewNotes:
+//                return true;
+//            case R.id.itemSortNotes:
+//                return true;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
-    public void showPopup(View view) {
-        PopupMenu popupMenu = new PopupMenu(this,view);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.note_options_menu);
-        popupMenu.show();
-    }
+//    public void showPopup(View view) {
+//        PopupMenu popupMenu = new PopupMenu(this,view);
+//        popupMenu.setOnMenuItemClickListener(this);
+//        popupMenu.inflate(R.menu.note_options_menu);
+//        popupMenu.show();
+//    }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.itemViewNotes:
-                return true;
-            case R.id.itemSortNotes:
-                return true;
-            default:
-                return false;
-        }
-    }
+//    @Override
+//    public boolean onMenuItemClick(MenuItem menuItem) {
+//        switch (menuItem.getItemId()){
+//            case R.id.itemViewNotes:
+//                return true;
+//            case R.id.itemSortNotes:
+//                return true;
+//            default:
+//                return false;
+//        }
+//    }
 }

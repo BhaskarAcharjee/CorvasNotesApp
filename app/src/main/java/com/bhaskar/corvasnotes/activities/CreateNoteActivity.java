@@ -28,6 +28,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private AlertDialog dialogDeleteNote;
 
     private Note alreadyAvailableNote;
+
 
 
     @Override
@@ -124,6 +126,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         initMiscellaneous();
         setSubtitleIndicatorColor();
+
     }
 
     private void setViewOrUpdateNote(){
@@ -152,13 +155,13 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
-        if (inputNoteTitle.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (inputNoteText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Note can't be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (inputNoteTitle.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
+//            return;
+//        } else if (inputNoteText.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(this, "Note can't be empty!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         final Note note = new Note();
         note.setTitle(inputNoteTitle.getText().toString());
@@ -515,6 +518,10 @@ public class CreateNoteActivity extends AppCompatActivity {
 //    Note Save on BackPressed
     @Override
     public void onBackPressed(){
-        saveNote();
+        if (inputNoteTitle.getText().toString().trim().isEmpty() || inputNoteText.getText().toString().trim().isEmpty()) {
+            super.onBackPressed();
+        } else {
+            saveNote();
+        }
     }
 }

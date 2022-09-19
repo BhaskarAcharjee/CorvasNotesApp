@@ -34,10 +34,12 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_add_outline.xml" value="0.1975" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_add_reminder.xml" value="0.196" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_back.xml" value="0.1975" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_cog.xml" value="0.1065" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_color_palette.xml" value="0.1795" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_delete.xml" value="0.197" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_done.xml" value="0.1975" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_export_file.xml" value="0.197" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_format_quote.xml" value="0.197" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_image_file.xml" value="0.197" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1975" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/drawable/ic_note_subtitle.xml" value="0.1795" />
@@ -60,7 +62,10 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/layout_header.xml" value="0.25" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/layout_miscellaneous.xml" value="0.264" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/layout_page_curl.xml" value="0.22826086956521738" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/main.xml" value="0.23489583333333333" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/layout/test.xml" value="0.23489583333333333" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/menu/activity_main_drawer.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/CorvasNotes/app/src/main/res/menu/note_options_menu.xml" value="0.23385416666666667" />
         <entry key="..\:/Users/USER/CorvasNotes/app/src/main/res/layout/activity_create_note.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/USER/CorvasNotes/app/src/main/res/layout/activity_main.xml" value="0.23489583333333333" />
