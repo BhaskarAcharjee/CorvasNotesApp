@@ -1,10 +1,12 @@
 package com.bhaskar.corvasnotes.adapters;
 
+import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +50,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NoteViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.setNote(notes.get(position));
         holder.layoutNote.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,9 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
         void setNote(Note note) {
             textTitle.setText(note.getTitle());
+//            textNote.setText(note.getNoteText().toString());
+            textNote.setText(Html.fromHtml(note.getNoteText()).toString());
+            textDateTime.setText(note.getDateTime());
 
             //    SubTitle Show in NoteList
 //            if (note.getSubtitle().trim().isEmpty()) {
@@ -93,14 +98,12 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 //                textSubtitle.setText(note.getSubtitle());
 //            }
 
-            //    Note Show in Notelist Container
-            if (note.getNoteText().trim().isEmpty()) {
-                textNote.setVisibility(View.GONE);
-            } else {
-                textNote.setText(note.getNoteText());
-            }
-
-            textDateTime.setText(note.getDateTime());
+//            //    Note Show in Notelist Container
+//            if (note.getNoteText().trim().isEmpty()) {
+//                textNote.setVisibility(View.GONE);
+//            } else {
+//                textNote.setText(note.getNoteText());
+//            }
 
             GradientDrawable gradientDrawable = (GradientDrawable) layoutNote.getBackground();
 

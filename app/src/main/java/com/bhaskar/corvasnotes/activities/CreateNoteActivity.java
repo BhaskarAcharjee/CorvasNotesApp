@@ -16,6 +16,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -23,6 +24,14 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.BulletSpan;
+import android.text.style.StrikethroughSpan;
+import android.text.style.StyleSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +46,7 @@ import android.widget.Toast;
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
+import com.bhaskar.corvasnotes.view.NemosoftsText.NemosoftsEditText;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.InputStream;
@@ -46,11 +56,13 @@ import java.util.Locale;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
-    private EditText inputNoteTitle, inputNoteSubtitle, inputNoteText;
+    private EditText inputNoteTitle, inputNoteSubtitle;
     private TextView textDateTime;
     private ImageView imageNote,imageRemoveSubtitle;
     private TextView textWebURL;
     private LinearLayout layoutWebURL;
+    private NemosoftsEditText inputNoteText;
+    private ImageButton bold, italic, underline, strikethrough, bullet, quote, clear;
 
     private View viewSubtitleIndicator, textMiscellaneous;
     private String selectedNoteColor;
@@ -76,13 +88,24 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         inputNoteTitle = findViewById(R.id.inputNoteTitle);
         inputNoteSubtitle = findViewById(R.id.inputNoteSubtitle);
-        inputNoteText = findViewById(R.id.inputNote);
+        inputNoteText = (NemosoftsEditText) findViewById(R.id.inputNote);
         textDateTime = findViewById(R.id.textDateTime);
         viewSubtitleIndicator = findViewById(R.id.viewSubtitleIndicator);
         textMiscellaneous = findViewById(R.id.textMiscellaneous);
         imageNote = findViewById(R.id.imageNote);
         textWebURL = findViewById(R.id.textWebURL);
         layoutWebURL = findViewById(R.id.layoutWebURL);
+
+        bold = (ImageButton) findViewById(R.id.bold);
+        italic = (ImageButton) findViewById(R.id.italic);
+        underline = (ImageButton) findViewById(R.id.underline);
+        strikethrough = (ImageButton) findViewById(R.id.strikethrough);
+        bullet = (ImageButton) findViewById(R.id.bullet);
+        quote = (ImageButton) findViewById(R.id.quote);
+        clear = (ImageButton) findViewById(R.id.clear);
+
+
+        inputNoteText.setSelection(inputNoteText.getEditableText().length());
 
         textDateTime.setText(new SimpleDateFormat("EEEE, dd MMM yyyy HH:mm", Locale.getDefault())
                 .format(new Date())
@@ -127,12 +150,111 @@ public class CreateNoteActivity extends AppCompatActivity {
         initMiscellaneous();
         setSubtitleIndicatorColor();
 
+        bold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.bold(!inputNoteText.contains(NemosoftsEditText.FORMAT_BOLD));
+            }
+        });
+        bold.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_bold, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        italic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.italic(!inputNoteText.contains(NemosoftsEditText.FORMAT_ITALIC));
+            }
+        });
+
+        italic.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_italic, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        underline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.underline(!inputNoteText.contains(NemosoftsEditText.FORMAT_UNDERLINED));
+            }
+        });
+        underline.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_underline, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        strikethrough.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.strikethrough(!inputNoteText.contains(NemosoftsEditText.FORMAT_STRIKETHROUGH));
+            }
+        });
+        strikethrough.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_strikethrough, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        bullet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.bullet(!inputNoteText.contains(NemosoftsEditText.FORMAT_BULLET));
+            }
+        });
+        bullet.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_bullet, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+
+        quote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.quote(!inputNoteText.contains(NemosoftsEditText.FORMAT_QUOTE));
+            }
+        });
+
+        quote.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_quote, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.clearFormats();
+            }
+        });
+
+        clear.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_format_clear, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
     private void setViewOrUpdateNote(){
         inputNoteTitle.setText(alreadyAvailableNote.getTitle());
         inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
-        inputNoteText.setText(alreadyAvailableNote.getNoteText());
+        inputNoteText.fromHtml(alreadyAvailableNote.getNoteText());
         textDateTime.setText(alreadyAvailableNote.getDateTime());
 
         if (alreadyAvailableNote.getImagePath() != null && !alreadyAvailableNote.getImagePath().trim().isEmpty()) {
@@ -166,7 +288,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         final Note note = new Note();
         note.setTitle(inputNoteTitle.getText().toString());
         note.setSubtitle(inputNoteSubtitle.getText().toString());
-        note.setNoteText(inputNoteText.getText().toString());
+        note.setNoteText(inputNoteText.toHtml());
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
@@ -518,10 +640,48 @@ public class CreateNoteActivity extends AppCompatActivity {
 //    Note Save on BackPressed
     @Override
     public void onBackPressed(){
-        if (inputNoteTitle.getText().toString().trim().isEmpty() || inputNoteText.getText().toString().trim().isEmpty()) {
+        if (inputNoteTitle.getText().toString().trim().isEmpty() && inputNoteText.getText().toString().trim().isEmpty()) {
             super.onBackPressed();
         } else {
             saveNote();
         }
     }
+
+//    On Click Button
+//    public void formatBold(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatItalic(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StyleSpan(Typeface.ITALIC),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatUnderline(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new UnderlineSpan(),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatStrikethrough(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StrikethroughSpan(),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatClear(View view) {
+//        String clearFormatText = inputNoteText.getText().toString();
+//        inputNoteText.setText(clearFormatText);
+//    }
+//
+//    public void formatBullet(View view) {
+//    }
+
 }

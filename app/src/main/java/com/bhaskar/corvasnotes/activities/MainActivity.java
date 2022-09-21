@@ -224,41 +224,4 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         this.noteClickedPosition = noteClickedPosition;
     }
 
-//    Popup Menu
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.note_options_menu,menu);
-//        return true;
-//    }
-
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.itemViewNotes:
-//                return true;
-//            case R.id.itemSortNotes:
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    public void showPopup(View view) {
-//        PopupMenu popupMenu = new PopupMenu(this,view);
-//        popupMenu.setOnMenuItemClickListener(this);
-//        popupMenu.inflate(R.menu.note_options_menu);
-//        popupMenu.show();
-//    }
-
-//    @Override
-//    public boolean onMenuItemClick(MenuItem menuItem) {
-//        switch (menuItem.getItemId()){
-//            case R.id.itemViewNotes:
-//                return true;
-//            case R.id.itemSortNotes:
-//                return true;
-//            default:
-//                return false;
-//        }
-//    }
 }

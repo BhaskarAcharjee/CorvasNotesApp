@@ -29,12 +29,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/image"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:textSize="19sp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_28sdp"
             android:layout_toEndOf="@+id/image"
             android:text="@string/app_name"
             android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_19ssp"
             android:textStyle="bold" />
 
         <View

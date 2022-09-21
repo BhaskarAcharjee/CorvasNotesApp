@@ -179,7 +179,7 @@
 
             </LinearLayout>
 
-            <EditText
+            <com.bhaskar.corvasnotes.view.NemosoftsText.NemosoftsEditText
                 android:id="@+id/inputNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -218,6 +218,7 @@
             android:layout_height="wrap_content">
 
             <ImageButton android:id="@+id/bold"
+
                 android:contentDescription="@null"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -228,6 +229,7 @@
             </ImageButton>
 
             <ImageButton android:id="@+id/italic"
+
                 android:contentDescription="@null"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -238,6 +240,7 @@
             </ImageButton>
 
             <ImageButton android:id="@+id/underline"
+
                 android:contentDescription="@null"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -283,6 +286,36 @@
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_format_clear"
+                android:scaleType="center"
+                android:background="?android:selectableItemBackground"
+                app:tint="@color/colorWhite">
+            </ImageButton>
+
+            <ImageButton android:id="@+id/centerAllign"
+                android:contentDescription="@null"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_format_align_center"
+                android:scaleType="center"
+                android:background="?android:selectableItemBackground"
+                app:tint="@color/colorWhite">
+            </ImageButton>
+
+            <ImageButton android:id="@+id/leftAllign"
+                android:contentDescription="@null"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_format_align_left"
+                android:scaleType="center"
+                android:background="?android:selectableItemBackground"
+                app:tint="@color/colorWhite">
+            </ImageButton>
+
+            <ImageButton android:id="@+id/rightAllign"
+                android:contentDescription="@null"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_format_align_right"
                 android:scaleType="center"
                 android:background="?android:selectableItemBackground"
                 app:tint="@color/colorWhite">
