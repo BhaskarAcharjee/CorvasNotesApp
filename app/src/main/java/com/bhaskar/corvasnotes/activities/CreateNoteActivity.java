@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -75,7 +76,6 @@ public class CreateNoteActivity extends AppCompatActivity {
     private AlertDialog dialogDeleteNote;
 
     private Note alreadyAvailableNote;
-
 
 
     @Override
@@ -150,6 +150,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         initMiscellaneous();
         setSubtitleIndicatorColor();
 
+//        Miscellaneous Buttons Activity
         bold.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +171,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                 inputNoteText.italic(!inputNoteText.contains(NemosoftsEditText.FORMAT_ITALIC));
             }
         });
-
         italic.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -178,6 +178,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         underline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -191,6 +192,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         strikethrough.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +206,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 return true;
             }
         });
+
         bullet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -218,14 +221,12 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
-
         quote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 inputNoteText.quote(!inputNoteText.contains(NemosoftsEditText.FORMAT_QUOTE));
             }
         });
-
         quote.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -240,7 +241,6 @@ public class CreateNoteActivity extends AppCompatActivity {
                 inputNoteText.clearFormats();
             }
         });
-
         clear.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -277,6 +277,8 @@ public class CreateNoteActivity extends AppCompatActivity {
     }
 
     private void saveNote() {
+
+//        showing Warning Notes Cann't be Empty
 //        if (inputNoteTitle.getText().toString().trim().isEmpty()) {
 //            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
 //            return;
@@ -322,6 +324,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         new SaveNoteTask().execute();
     }
 
+//    Miscellaneous Activity
     private void initMiscellaneous() {
         final LinearLayout layoutMiscellaneous = findViewById(R.id.layoutMiscellaneous);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMiscellaneous);
@@ -343,6 +346,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         final ImageView imageColor4 = layoutMiscellaneous.findViewById(R.id.imageColor4);
         final ImageView imageColor5 = layoutMiscellaneous.findViewById(R.id.imageColor5);
 
+//        Note Color Change According Selections
         layoutMiscellaneous.findViewById(R.id.viewColor1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -404,6 +408,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
+//        Fetch Already available Note color
         if (alreadyAvailableNote != null && alreadyAvailableNote.getColor() != null && !alreadyAvailableNote.getColor().trim().isEmpty()) {
             switch (alreadyAvailableNote.getColor()) {
                 case "#FDBE3B":
@@ -424,6 +429,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         }
 
+//        Miscellaneous Activity : ADD IMAGE
         layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -438,7 +444,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 }
             }
         });
-
+//        Miscellaneous Activity : Show URL Dialog
         layoutMiscellaneous.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -446,7 +452,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 showAddURLDialog();
             }
         });
-
+//        Miscellaneous Activity : ADD SUBTITLE
         layoutMiscellaneous.findViewById(R.id.layoutAddSubtitle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

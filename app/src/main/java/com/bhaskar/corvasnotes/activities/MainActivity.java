@@ -3,6 +3,7 @@ package com.bhaskar.corvasnotes.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -11,20 +12,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.app.MediaRouteButton;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Patterns;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bhaskar.corvasnotes.R;
@@ -50,20 +64,23 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     boolean isSwitchOn = false;
 
+    private ImageButton buttonPopupMainOptions;
+    Dialog dialogPopupMainOptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar =  findViewById(R.id.toolbar_home);
-        setSupportActionBar(toolbar);
-        setTitle(R.string.app_name);
+//        Toolbar toolbar =  findViewById(R.id.toolbar_home);
+//        setSupportActionBar(toolbar);
+//        setTitle(R.string.app_name);
 
-        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
@@ -119,32 +136,29 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isSwitchOn) {
-                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-                    lottieSwitchButton.playAnimation();
-                    isSwitchOn = false;
-                } else {
-                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-                    lottieSwitchButton.playAnimation();
-                    isSwitchOn = true;
-                }
-//                if (isNightModeOn) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    sharedPrefsEdit.putBoolean("Night Mode",false);
-//                    sharedPrefsEdit.apply();
+//                if (isSwitchOn) {
+//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+//                    lottieSwitchButton.playAnimation();
+//                    isSwitchOn = false;
 //                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    sharedPrefsEdit.putBoolean("Night Mode",true);
-//                    sharedPrefsEdit.apply();
+//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+//                    lottieSwitchButton.playAnimation();
+//                    isSwitchOn = true;
 //                }
+                if (isNightModeOn) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    sharedPrefsEdit.putBoolean("Night Mode",false);
+                    sharedPrefsEdit.apply();
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    sharedPrefsEdit.putBoolean("Night Mode",true);
+                    sharedPrefsEdit.apply();
+                }
 
             }
         });
 
-//        Clear Search Box Text
-//        if (inputSearch.getText()!=null){
-//            findViewById(R.id.clearSearch).setVisibility(View.VISIBLE);
-//        }
+//      Clear Search content clicking Cross button
         ImageView clearSearch = findViewById(R.id.clearSearch);
         clearSearch.setOnClickListener(new OnClickListener() {
             @Override
@@ -154,6 +168,37 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             }
         });
 
+//      Clicking search Button Expand Search Bar
+        ImageButton buttonSearch = findViewById(R.id.buttonSearch);
+        buttonSearch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout layoutSearch = findViewById(R.id.layoutSearch);
+                if (layoutSearch.getVisibility()==View.VISIBLE){
+                    layoutSearch.setVisibility(View.GONE);
+                } else {
+                    layoutSearch.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+//      Popup Main Options
+        dialogPopupMainOptions = new Dialog(MainActivity.this);
+        dialogPopupMainOptions.setContentView(R.layout.popup_main_options);
+        dialogPopupMainOptions.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialogPopupMainOptions.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        buttonPopupMainOptions = findViewById(R.id.buttonPopupMainOptions);
+        buttonPopupMainOptions.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogPopupMainOptions.show();
+            }
+        });
+
+        Window window = dialogPopupMainOptions.getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.gravity = Gravity.TOP;
+        window.setAttributes(layoutParams);
     }
 
     @Override

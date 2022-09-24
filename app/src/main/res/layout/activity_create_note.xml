@@ -10,11 +10,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_20sdp"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/_10sdp">
+        android:paddingBottom="@dimen/_50sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/noteFullLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
@@ -101,6 +101,7 @@
                 android:inputType="textMultiLine"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_20sdp"
                 android:textColor="@color/colorTextSubtitle"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_13ssp"
@@ -213,7 +214,8 @@
         android:background="@drawable/background_search"
         android:scrollbars="none">
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 

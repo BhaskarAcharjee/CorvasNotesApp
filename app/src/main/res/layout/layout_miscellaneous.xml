@@ -14,13 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_6sdp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal">
         <View
             android:id="@+id/textMiscellaneous"
             android:layout_width="@dimen/_128sdp"
             android:layout_height="@dimen/_8sdp"
-            android:layout_marginStart="@dimen/_82sdp"
             android:background="@drawable/background_subtitle_indicator">
         </View>
     </LinearLayout>
@@ -164,7 +163,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_note_subtitle"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,7 +189,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_add_image"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -218,7 +215,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_web_link"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -245,7 +241,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_export_file"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -272,7 +267,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_share"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -303,7 +297,6 @@
             android:src="@drawable/ic_delete"
             app:tint="@color/colorDelete"
             android:contentDescription="@string/app_name" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

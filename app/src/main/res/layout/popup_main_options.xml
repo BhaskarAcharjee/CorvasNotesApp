@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layoutPopupMainOptions"
+    android:layout_margin="@dimen/_10sdp"
+    android:background="@drawable/background_dialog"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text="Options"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/_16ssp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/favouriteNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_favourite_note"
+            android:scaleType="center"
+            app:tint="@color/colorWhite">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/lockNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_lock_note"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/sharedNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_shared_notes"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/folderNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_folder"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/viewNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_view"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/recycleBinNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_delete"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+        <ImageButton android:id="@+id/tagsNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_tags"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+        <ImageButton
+            android:id="@+id/settingsNote"
+            android:contentDescription="@null"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/ic_settings"
+            android:scaleType="center"
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
+        </ImageButton>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="8dp"/>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        <TextView-->
+<!--            android:background="?attr/selectableItemBackground"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:id="@+id/textCancel"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginEnd="@dimen/_8sdp"-->
+<!--            android:layout_marginBottom="@dimen/_8sdp"-->
+<!--            android:includeFontPadding="false"-->
+<!--            android:padding="@dimen/_8sdp"-->
+<!--            android:text="Cancel"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textSize="@dimen/_13ssp" />-->
+<!--    </RelativeLayout>-->
+
+
+</LinearLayout>

@@ -7,74 +7,86 @@
     android:background="@color/colorPrimary"
     tools:context=".activities.MainActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/textMyNotes"-->
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar_home"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="@dimen/_12sdp"-->
-<!--        android:layout_marginTop="@dimen/_20sdp"-->
-<!--        android:layout_marginEnd="@dimen/_12sdp"-->
-<!--        android:includeFontPadding="false"-->
-<!--        android:text="@string/app_name"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:textSize="@dimen/_20ssp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent" />-->
+<!--        tools:ignore="MissingConstraints" />-->
 
-    <!--    <ImageButton android:onClick="showPopup"-->
-    <!--        android:layout_width="@dimen/_30sdp"-->
-    <!--        android:layout_height="@dimen/_30sdp"-->
-    <!--        android:background="@drawable/ic_settings"-->
-    <!--        android:layout_marginEnd="@dimen/_12sdp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@id/textMyNotes"-->
-    <!--        app:layout_constraintTop_toTopOf="@id/textMyNotes"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        android:contentDescription="@string/app_name" />-->
+    <TextView
+        android:id="@+id/textMyNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
+        android:includeFontPadding="false"
+        android:text="@string/app_name"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_20ssp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/buttonSearch"
+            android:layout_width="@dimen/_22sdp"
+            android:layout_height="@dimen/_22sdp"
+            android:background="@drawable/ic_search"
+            android:layout_marginEnd="@dimen/_34sdp"
+            app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
+            app:layout_constraintTop_toTopOf="@id/textMyNotes"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/app_name" />
+
+    <ImageButton
+            android:id="@+id/buttonPopupMainOptions"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:background="@drawable/ic_settings"
+            android:layout_marginEnd="@dimen/_12sdp"
+            app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
+            app:layout_constraintTop_toTopOf="@id/textMyNotes"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/app_name" />
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieSwitchButton"
         app:lottie_rawRes="@raw/day_night_switch"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_60sdp"
         android:layout_marginBottom="@dimen/_4sdp"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_home"
-        app:layout_constraintTop_toTopOf="@id/toolbar_home"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
+        app:layout_constraintTop_toTopOf="@id/textMyNotes"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <LinearLayout
         android:id="@+id/layoutSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_8sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/background_search"
         android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_home">
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@+id/textMyNotes">
 
         <ImageView
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
+            android:layout_gravity="center"
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_search"
             app:tint="@color/colorSearchIcon" />
-
         <EditText
             android:id="@+id/inputSearch"
             android:layout_width="@dimen/_218sdp"
             android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_8sdp"
             android:background="@null"
             android:hint="@string/search_notes"
             android:imeOptions="actionDone"
@@ -84,7 +96,6 @@
             android:textColor="@color/colorWhite"
             android:textColorHint="@color/colorTextHint"
             android:textSize="@dimen/_13ssp" />
-
         <ImageView
             android:id="@+id/clearSearch"
             android:layout_width="@dimen/_20sdp"
@@ -106,9 +117,9 @@
         android:clipToPadding="false"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
-        app:layout_constraintTop_toBottomOf="@+id/layoutSearch"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
 
     <LinearLayout
         android:id="@+id/layoutQuickActions"
@@ -121,27 +132,27 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/imageAddNote"
+            android:id="@+id/quickActionProfile"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_add_outline"
+            android:src="@drawable/ic_quick_person"
             app:tint="@color/colorIcons" />
         <ImageView
-            android:id="@+id/imageAddImage"
+            android:id="@+id/quickActionApps"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_add_image"
+            android:src="@drawable/ic_quick_apps"
             app:tint="@color/colorIcons" />
         <ImageView
-            android:id="@+id/imageAddWebLink"
+            android:id="@+id/quickActionAddOns"
             android:layout_width="@dimen/_23sdp"
             android:layout_height="@dimen/_23sdp"
             android:layout_marginStart="@dimen/_15sdp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_web_link"
+            android:src="@drawable/ic_quick_add_on"
             app:tint="@color/colorIcons" />
 
     </LinearLayout>
