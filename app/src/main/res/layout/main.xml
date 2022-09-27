@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,168 +7,176 @@
     android:background="@color/colorPrimary"
     tools:context=".activities.MainActivity">
 
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar_home"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        tools:ignore="MissingConstraints" />-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/textMyNotes"
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentScrim="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_160sdp"
+                android:background="@drawable/background_expanded_toolbar"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_40sdp">
+                    <TextView
+                        android:id="@+id/textMyNotes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:includeFontPadding="false"
+                        android:text="@string/app_name"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/_20ssp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lottieSwitchButton"
+                        app:lottie_rawRes="@raw/day_night_switch"
+                        android:layout_width="@dimen/_70sdp"
+                        android:layout_height="@dimen/_70sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_100sdp"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layoutSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:background="@drawable/background_search"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_gravity="bottom">
+
+                    <ImageView
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_search"
+                        app:tint="@color/colorSearchIcon" />
+                    <EditText
+                        android:id="@+id/inputSearch"
+                        android:layout_width="@dimen/_218sdp"
+                        android:layout_height="@dimen/_35sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:background="@null"
+                        android:hint="@string/search_notes"
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:includeFontPadding="false"
+                        android:inputType="text"
+                        android:textColor="@color/colorWhite"
+                        android:textColorHint="@color/colorTextHint"
+                        android:textSize="@dimen/_13ssp" />
+                    <ImageView
+                        android:id="@+id/clearSearch"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_clear_search"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:visibility="gone"
+                        app:tint="@color/colorSearchIcon" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarMain"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin">
+                <ImageButton
+                    android:id="@+id/buttonPopupMainOptions"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:background="@drawable/ic_settings"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:contentDescription="@string/app_name" />
+                <ImageButton
+                    android:id="@+id/buttonSearch"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:background="@drawable/ic_search"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:contentDescription="@string/app_name" />
+
+            </androidx.appcompat.widget.Toolbar>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/notesRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:clipToPadding="false"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_50sdp"
+            app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
+            app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/layoutQuickActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@color/colorAccent"
+            android:padding="@dimen/_6sdp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:menu="@menu/bottom_menu"
+        app:fabCradleRoundedCornerRadius="@dimen/_40sdp"
+        app:fabCradleMargin="@dimen/_8sdp"
+        app:fabAlignmentMode="end"
+        app:navigationIcon="@drawable/ic_menu" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/imageAddNoteMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:includeFontPadding="false"
-        android:text="@string/app_name"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageButton
-            android:id="@+id/buttonSearch"
-            android:layout_width="@dimen/_22sdp"
-            android:layout_height="@dimen/_22sdp"
-            android:background="@drawable/ic_search"
-            android:layout_marginEnd="@dimen/_34sdp"
-            app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
-            app:layout_constraintTop_toTopOf="@id/textMyNotes"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/app_name" />
-
-    <ImageButton
-            android:id="@+id/buttonPopupMainOptions"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:background="@drawable/ic_settings"
-            android:layout_marginEnd="@dimen/_12sdp"
-            app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
-            app:layout_constraintTop_toTopOf="@id/textMyNotes"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/app_name" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieSwitchButton"
-        app:lottie_rawRes="@raw/day_night_switch"
-        android:layout_width="@dimen/_70sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_60sdp"
-        android:layout_marginBottom="@dimen/_4sdp"
-        app:layout_constraintBottom_toBottomOf="@id/textMyNotes"
-        app:layout_constraintTop_toTopOf="@id/textMyNotes"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-
-    <LinearLayout
-        android:id="@+id/layoutSearch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:background="@drawable/background_search"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@+id/textMyNotes">
-
-        <ImageView
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_search"
-            app:tint="@color/colorSearchIcon" />
-        <EditText
-            android:id="@+id/inputSearch"
-            android:layout_width="@dimen/_218sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:background="@null"
-            android:hint="@string/search_notes"
-            android:imeOptions="actionDone"
-            android:importantForAutofill="no"
-            android:includeFontPadding="false"
-            android:inputType="text"
-            android:textColor="@color/colorWhite"
-            android:textColorHint="@color/colorTextHint"
-            android:textSize="@dimen/_13ssp" />
-        <ImageView
-            android:id="@+id/clearSearch"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_clear_search"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:visibility="gone"
-            app:tint="@color/colorSearchIcon" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/notesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:clipToPadding="false"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@id/layoutQuickActions"
-        app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
-
-    <LinearLayout
-        android:id="@+id/layoutQuickActions"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorQuickActionsBackground"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="@dimen/_15sdp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ImageView
-            android:id="@+id/quickActionProfile"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_quick_person"
-            app:tint="@color/colorIcons" />
-        <ImageView
-            android:id="@+id/quickActionApps"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_quick_apps"
-            app:tint="@color/colorIcons" />
-        <ImageView
-            android:id="@+id/quickActionAddOns"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_23sdp"
-            android:layout_marginStart="@dimen/_15sdp"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_quick_add_on"
-            app:tint="@color/colorIcons" />
-
-    </LinearLayout>
-
-    <ImageView
-        android:id="@+id/imageAddNoteMain"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:background="@drawable/background_add_button"
-        android:contentDescription="@string/app_name"
-        android:padding="@dimen/_5sdp"
+        app:layout_anchor="@id/bottomAppBar"
+        android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_add"
-        app:tint="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/layoutQuickActions"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/layoutQuickActions"/>
+        android:contentDescription="@string/app_name"
+        app:maxImageSize="@dimen/_35sdp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

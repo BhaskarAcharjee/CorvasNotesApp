@@ -29,4 +29,7 @@
     <string name="share_the_app">Share the App</string>
     <string name="version">Version</string>
     <string name="made_with_in_india">Made  In India</string>
+    <string name="apps">Apps</string>
+    <string name="profile">Profile</string>
+    <string name="add_ons">Add Ons</string>
 </resources>

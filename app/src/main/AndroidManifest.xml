@@ -17,6 +17,9 @@
         android:theme="@style/Theme.CorvasNotes"
         tools:targetApi="s">
         <activity
+            android:name=".activities.AboutActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.CreateNoteActivity"
             android:exported="false"
             android:screenOrientation="portrait"

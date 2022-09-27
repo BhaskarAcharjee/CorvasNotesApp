@@ -44,7 +44,8 @@
             android:layout_height="@dimen/_40sdp"
             android:src="@drawable/ic_favourite_note"
             android:scaleType="center"
-            app:tint="@color/colorWhite">
+            app:tint="@color/colorWhite"
+            android:background="?android:selectableItemBackground">
         </ImageButton>
 
         <ImageButton
