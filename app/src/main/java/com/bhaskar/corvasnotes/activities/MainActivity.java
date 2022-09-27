@@ -3,17 +3,17 @@ package com.bhaskar.corvasnotes.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.MediaRouteButton;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -21,11 +21,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Patterns;
 import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,16 +32,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.bhaskar.corvasnotes.NavigationUtil;
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,11 +73,34 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         setTitle(R.string.app_name);
 
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.action_set :
+                        NavigationUtil.SettingActivity(MainActivity.this);
+                        break;
+
+                    case R.id.nav_delete :
+//                        NavigationUtil.DeleteActivity(MainActivity.this);
+                        break;
+
+                    default :
+                        break;
+                }
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+//        Expanded toolbar
         Toolbar toolbarMain = findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbarMain);
 
@@ -133,32 +152,32 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        //        Day Night Mode switch
-        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
-        lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (isSwitchOn) {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = false;
+//        //        Day Night Mode switch
+//        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
+//        lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                if (isSwitchOn) {
+////                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+////                    lottieSwitchButton.playAnimation();
+////                    isSwitchOn = false;
+////                } else {
+////                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+////                    lottieSwitchButton.playAnimation();
+////                    isSwitchOn = true;
+////                }
+//                if (isNightModeOn) {
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                    sharedPrefsEdit.putBoolean("Night Mode",false);
+//                    sharedPrefsEdit.apply();
 //                } else {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = true;
+//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                    sharedPrefsEdit.putBoolean("Night Mode",true);
+//                    sharedPrefsEdit.apply();
 //                }
-                if (isNightModeOn) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    sharedPrefsEdit.putBoolean("Night Mode",false);
-                    sharedPrefsEdit.apply();
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    sharedPrefsEdit.putBoolean("Night Mode",true);
-                    sharedPrefsEdit.apply();
-                }
-
-            }
-        });
+//
+//            }
+//        });
 
 //      Clear Search content clicking Cross button
         ImageView clearSearch = findViewById(R.id.clearSearch);

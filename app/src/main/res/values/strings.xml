@@ -39,4 +39,15 @@
     <string name="profile">Profile</string>
     <string name="add_ons">Add Ons</string>
     <string name="made_in_india">Made In india</string>
+    <string name="about">About Us</string>
+    <string name="app_theme">App Theme</string>
+    <string name="dark_or_light_mode">Dark or Light Mode</string>
+    <string name="social_links">Social Links, Policy</string>
+    <string name="about_">About</string>
+    <string name="high_security">High Security</string>
+    <string name="lock_screen">Lock Screen</string>
+    <string name="cache">Clear Cache</string>
+    <string name="clear_cache">Clear All Caches</string>
+    <string name="privacy_policy">Privacy Ploicy</string>
+    <string name="this_app_privacy_policy">Read Full Privacy Policy</string>
 </resources>
