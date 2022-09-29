@@ -2,39 +2,49 @@ package com.bhaskar.corvasnotes.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
+import android.widget.LinearLayout;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
+import com.bhaskar.corvasnotes.note.CreateNoteActivity;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NotesListener, PopupMenu.OnMenuItemClickListener {
+public class MainActivity extends AppCompatActivity implements NotesListener {
 
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
@@ -48,10 +58,51 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
 
     boolean isSwitchOn = false;
 
+    private ImageButton buttonPopupMainOptions;
+    Dialog dialogPopupMainOptions;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar =  findViewById(R.id.bottomAppBar);
+        setSupportActionBar(toolbar);
+        setTitle(R.string.app_name);
+
+        DrawerLayout drawer =  findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.action_set :
+                        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, SettingsActivity.class), null);
+                        MainActivity.this.finish();
+                        break;
+
+                    case R.id.nav_delete :
+                        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, DeleteActivity.class), null);
+                        MainActivity.this.finish();
+                        break;
+
+                    default :
+                        break;
+                }
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+//        Expanded toolbar
+        Toolbar toolbarMain = findViewById(R.id.toolbarMain);
+        setSupportActionBar(toolbarMain);
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
         imageAddNoteMain.setOnClickListener(view -> startActivityForResult(
@@ -85,8 +136,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
             public void afterTextChanged(Editable editable) {
                 if (noteList.size() != 0){
                     notesAdapter.searchNotes(editable.toString());
+                    findViewById(R.id.clearSearch).setVisibility(View.VISIBLE);
                 }
-
             }
         });
 
@@ -101,33 +152,47 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        //        Day Night Mode switch
-        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
-        lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
+//      Clear Search content clicking Cross button
+        ImageView clearSearch = findViewById(R.id.clearSearch);
+        clearSearch.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (isSwitchOn) {
-                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-                    lottieSwitchButton.playAnimation();
-                    isSwitchOn = false;
-                } else {
-                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-                    lottieSwitchButton.playAnimation();
-                    isSwitchOn = true;
-                }
-//                if (isNightModeOn) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    sharedPrefsEdit.putBoolean("Night Mode",false);
-//                    sharedPrefsEdit.apply();
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    sharedPrefsEdit.putBoolean("Night Mode",true);
-//                    sharedPrefsEdit.apply();
-//                }
-
+            public void onClick(View view) {
+                inputSearch.getText().clear();
+                clearSearch.setVisibility(View.GONE);
             }
         });
 
+//      Clicking search Button Expand Search Bar
+        ImageButton buttonSearch = findViewById(R.id.buttonSearch);
+        buttonSearch.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LinearLayout layoutSearch = findViewById(R.id.layoutSearch);
+                if (layoutSearch.getVisibility()==View.VISIBLE){
+                    layoutSearch.setVisibility(View.GONE);
+                } else {
+                    layoutSearch.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+//      Popup Main Options
+        dialogPopupMainOptions = new Dialog(MainActivity.this);
+        dialogPopupMainOptions.setContentView(R.layout.popup_main_options);
+        dialogPopupMainOptions.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialogPopupMainOptions.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        buttonPopupMainOptions = findViewById(R.id.buttonPopupMainOptions);
+        buttonPopupMainOptions.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogPopupMainOptions.show();
+            }
+        });
+
+        Window window = dialogPopupMainOptions.getWindow();
+        WindowManager.LayoutParams layoutParams = window.getAttributes();
+        layoutParams.gravity = Gravity.TOP;
+        window.setAttributes(layoutParams);
     }
 
     @Override
@@ -198,41 +263,4 @@ public class MainActivity extends AppCompatActivity implements NotesListener, Po
         this.noteClickedPosition = noteClickedPosition;
     }
 
-//    Popup Menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.note_options_menu,menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.itemViewNotes:
-                return true;
-            case R.id.itemSortNotes:
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void showPopup(View view) {
-        PopupMenu popupMenu = new PopupMenu(this,view);
-        popupMenu.setOnMenuItemClickListener(this);
-        popupMenu.inflate(R.menu.note_options_menu);
-        popupMenu.show();
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.itemViewNotes:
-                return true;
-            case R.id.itemSortNotes:
-                return true;
-            default:
-                return false;
-        }
-    }
 }

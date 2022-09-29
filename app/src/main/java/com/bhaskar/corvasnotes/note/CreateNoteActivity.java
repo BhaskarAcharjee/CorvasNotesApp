@@ -1,4 +1,4 @@
-package com.bhaskar.corvasnotes.activities;
+package com.bhaskar.corvasnotes.note;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,14 +28,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.database.DeleteDatabase;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
+import com.bhaskar.corvasnotes.view.NemosoftsText.NemosoftsEditText;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.io.InputStream;
@@ -45,11 +48,13 @@ import java.util.Locale;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
-    private EditText inputNoteTitle, inputNoteSubtitle, inputNoteText;
+    private EditText inputNoteTitle, inputNoteSubtitle;
     private TextView textDateTime;
-    private ImageView imageNote;
+    private ImageView imageNote,imageRemoveSubtitle;
     private TextView textWebURL;
     private LinearLayout layoutWebURL;
+    private NemosoftsEditText inputNoteText;
+    private ImageButton bold, italic, underline, strikethrough, bullet, quote, clear;
 
     private View viewSubtitleIndicator, textMiscellaneous;
     private String selectedNoteColor;
@@ -74,13 +79,24 @@ public class CreateNoteActivity extends AppCompatActivity {
 
         inputNoteTitle = findViewById(R.id.inputNoteTitle);
         inputNoteSubtitle = findViewById(R.id.inputNoteSubtitle);
-        inputNoteText = findViewById(R.id.inputNote);
+        inputNoteText = (NemosoftsEditText) findViewById(R.id.inputNote);
         textDateTime = findViewById(R.id.textDateTime);
         viewSubtitleIndicator = findViewById(R.id.viewSubtitleIndicator);
         textMiscellaneous = findViewById(R.id.textMiscellaneous);
         imageNote = findViewById(R.id.imageNote);
         textWebURL = findViewById(R.id.textWebURL);
         layoutWebURL = findViewById(R.id.layoutWebURL);
+
+        bold = (ImageButton) findViewById(R.id.bold);
+        italic = (ImageButton) findViewById(R.id.italic);
+        underline = (ImageButton) findViewById(R.id.underline);
+        strikethrough = (ImageButton) findViewById(R.id.strikethrough);
+        bullet = (ImageButton) findViewById(R.id.bullet);
+        quote = (ImageButton) findViewById(R.id.quote);
+        clear = (ImageButton) findViewById(R.id.clear);
+
+
+        inputNoteText.setSelection(inputNoteText.getEditableText().length());
 
         textDateTime.setText(new SimpleDateFormat("EEEE, dd MMM yyyy HH:mm", Locale.getDefault())
                 .format(new Date())
@@ -97,45 +113,175 @@ public class CreateNoteActivity extends AppCompatActivity {
             setViewOrUpdateNote();
         }
 
+        findViewById(R.id.imageRemoveWebURL).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                textWebURL.setText(null);
+                layoutWebURL.setVisibility(View.GONE);
+            }
+        });
+            findViewById(R.id.imageRemoveImage).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    imageNote.setImageBitmap(null);
+                    imageNote.setVisibility(View.GONE);
+                    findViewById(R.id.imageRemoveImage).setVisibility(View.GONE);
+                    selectedImagePath = "";
+                }
+            });
+        findViewById(R.id.imageRemoveSubtitle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteSubtitle.setText(null);
+                inputNoteSubtitle.setVisibility(View.GONE);
+                findViewById(R.id.imageRemoveSubtitle).setVisibility(View.GONE);
+            }
+        });
+
         initMiscellaneous();
         setSubtitleIndicatorColor();
+
+//        Miscellaneous Buttons Activity
+        bold.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.bold(!inputNoteText.contains(NemosoftsEditText.FORMAT_BOLD));
+            }
+        });
+        bold.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_bold, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        italic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.italic(!inputNoteText.contains(NemosoftsEditText.FORMAT_ITALIC));
+            }
+        });
+        italic.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_italic, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        underline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.underline(!inputNoteText.contains(NemosoftsEditText.FORMAT_UNDERLINED));
+            }
+        });
+        underline.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_underline, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        strikethrough.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.strikethrough(!inputNoteText.contains(NemosoftsEditText.FORMAT_STRIKETHROUGH));
+            }
+        });
+        strikethrough.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_strikethrough, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        bullet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.bullet(!inputNoteText.contains(NemosoftsEditText.FORMAT_BULLET));
+            }
+        });
+        bullet.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_bullet, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        quote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.quote(!inputNoteText.contains(NemosoftsEditText.FORMAT_QUOTE));
+            }
+        });
+        quote.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_quote, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inputNoteText.clearFormats();
+            }
+        });
+        clear.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_format_clear, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
     }
 
     private void setViewOrUpdateNote(){
         inputNoteTitle.setText(alreadyAvailableNote.getTitle());
         inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
-        inputNoteText.setText(alreadyAvailableNote.getNoteText());
+        inputNoteText.fromHtml(alreadyAvailableNote.getNoteText());
         textDateTime.setText(alreadyAvailableNote.getDateTime());
 
         if (alreadyAvailableNote.getImagePath() != null && !alreadyAvailableNote.getImagePath().trim().isEmpty()) {
             imageNote.setImageBitmap(BitmapFactory.decodeFile(alreadyAvailableNote.getImagePath()));
             imageNote.setVisibility(View.VISIBLE);
+            findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
             selectedImagePath = alreadyAvailableNote.getImagePath();
         }
         if (alreadyAvailableNote.getWebLink() != null && !alreadyAvailableNote.getWebLink().trim().isEmpty()) {
             textWebURL.setText(alreadyAvailableNote.getWebLink());
+            findViewById(R.id.imageRemoveWebURL).setVisibility(View.VISIBLE);
             layoutWebURL.setVisibility(View.VISIBLE);
         }
         if (alreadyAvailableNote.getSubtitle() != null && !alreadyAvailableNote.getSubtitle().trim().isEmpty()) {
             inputNoteSubtitle.setText(alreadyAvailableNote.getSubtitle());
             inputNoteSubtitle.setVisibility(View.VISIBLE);
+            findViewById(R.id.imageRemoveSubtitle).setVisibility(View.VISIBLE);
             viewSubtitleIndicator.setVisibility(View.VISIBLE);
         }
     }
 
     private void saveNote() {
-        if (inputNoteTitle.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (inputNoteText.getText().toString().trim().isEmpty()) {
-            Toast.makeText(this, "Note can't be empty!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+
+//        showing Warning Notes Cann't be Empty
+//        if (inputNoteTitle.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(this, "Note title can't be empty!", Toast.LENGTH_SHORT).show();
+//            return;
+//        } else if (inputNoteText.getText().toString().trim().isEmpty()) {
+//            Toast.makeText(this, "Note can't be empty!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         final Note note = new Note();
         note.setTitle(inputNoteTitle.getText().toString());
         note.setSubtitle(inputNoteSubtitle.getText().toString());
-        note.setNoteText(inputNoteText.getText().toString());
+        note.setNoteText(inputNoteText.toHtml());
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
         note.setImagePath(selectedImagePath);
@@ -169,6 +315,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         new SaveNoteTask().execute();
     }
 
+//    Miscellaneous Activity
     private void initMiscellaneous() {
         final LinearLayout layoutMiscellaneous = findViewById(R.id.layoutMiscellaneous);
         final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMiscellaneous);
@@ -190,6 +337,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         final ImageView imageColor4 = layoutMiscellaneous.findViewById(R.id.imageColor4);
         final ImageView imageColor5 = layoutMiscellaneous.findViewById(R.id.imageColor5);
 
+//        Note Color Change According Selections
         layoutMiscellaneous.findViewById(R.id.viewColor1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -251,6 +399,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
+//        Fetch Already available Note color
         if (alreadyAvailableNote != null && alreadyAvailableNote.getColor() != null && !alreadyAvailableNote.getColor().trim().isEmpty()) {
             switch (alreadyAvailableNote.getColor()) {
                 case "#FDBE3B":
@@ -271,6 +420,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         }
 
+//        Miscellaneous Activity : ADD IMAGE
         layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -285,7 +435,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 }
             }
         });
-
+//        Miscellaneous Activity : Show URL Dialog
         layoutMiscellaneous.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -293,7 +443,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                 showAddURLDialog();
             }
         });
-
+//        Miscellaneous Activity : ADD SUBTITLE
         layoutMiscellaneous.findViewById(R.id.layoutAddSubtitle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -319,7 +469,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             if (dialogDeleteNote == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateNoteActivity.this);
                 View view = LayoutInflater.from(this).inflate(
-                        R.layout.layout_delete_note, (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
+                        R.layout.layout_delete_note_move, (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
                 );
                 builder.setView(view);
                 dialogDeleteNote = builder.create();
@@ -333,11 +483,11 @@ public class CreateNoteActivity extends AppCompatActivity {
                         class DeleteNoteTask extends AsyncTask<Void, Void, Void>
                         {
 
-//                            @Override
-//                            protected void onPreExecute() {
-//                                super.onPreExecute();
-//                                deleteSaveNote();
-//                            }
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                deleteSaveNote();
+                            }
 
                             @Override
                             protected Void doInBackground(Void... voids) {
@@ -371,6 +521,41 @@ public class CreateNoteActivity extends AppCompatActivity {
 
             dialogDeleteNote.show();
         }
+
+    private void deleteSaveNote() {
+        final Note note = new  Note();
+        note.setTitle(inputNoteTitle.getText().toString());
+        note.setSubtitle(inputNoteSubtitle.getText().toString());
+        note.setNoteText(inputNoteText.toHtml());
+        note.setDateTime(textDateTime.getText().toString());
+        note.setColor(selectedNoteColor);
+        note.setImagePath(selectedImagePath);
+
+        if (layoutWebURL.getVisibility() == View.VISIBLE){
+            note.setWebLink(textWebURL.getText().toString());
+        }
+
+        if (alreadyAvailableNote != null){
+            note.setId(alreadyAvailableNote.getId());
+        }
+
+        @SuppressLint("StaticFieldLeak")
+        class  DeleteSaveNoteTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DeleteDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+        new DeleteSaveNoteTask().execute();
+    }
 
     private void setSubtitleIndicatorColor() {
         GradientDrawable gradientDrawable = (GradientDrawable) viewSubtitleIndicator.getBackground();
@@ -412,6 +597,7 @@ public class CreateNoteActivity extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         imageNote.setImageBitmap(bitmap);
                         imageNote.setVisibility(View.VISIBLE);
+                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
 
                         selectedImagePath = getPathFromUri(selectedImageUri);
 
@@ -482,4 +668,52 @@ public class CreateNoteActivity extends AppCompatActivity {
         }
         dialogAddURL.show();
     }
+
+//    Note Save on BackPressed
+    @Override
+    public void onBackPressed(){
+        if (inputNoteTitle.getText().toString().trim().isEmpty() && inputNoteText.getText().toString().trim().isEmpty()) {
+            super.onBackPressed();
+        } else {
+            saveNote();
+        }
+    }
+
+//    On Click Button
+//    public void formatBold(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatItalic(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StyleSpan(Typeface.ITALIC),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatUnderline(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new UnderlineSpan(),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatStrikethrough(View view) {
+//        Spannable spannableString = new SpannableStringBuilder(inputNoteText.getText());
+//        spannableString.setSpan(new StrikethroughSpan(),
+//                inputNoteText.getSelectionStart(),inputNoteText.getSelectionEnd(),0);
+//        inputNoteText.setText(spannableString);
+//    }
+//
+//    public void formatClear(View view) {
+//        String clearFormatText = inputNoteText.getText().toString();
+//        inputNoteText.setText(clearFormatText);
+//    }
+//
+//    public void formatBullet(View view) {
+//    }
+
 }

@@ -8,19 +8,18 @@
     android:layout_height="wrap_content"
     android:background="@drawable/background_miscellaneous"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    app:behavior_peekHeight="@dimen/_20sdp">
+    app:behavior_peekHeight="@dimen/_54sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/_6sdp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="horizontal">
         <View
             android:id="@+id/textMiscellaneous"
             android:layout_width="@dimen/_128sdp"
             android:layout_height="@dimen/_8sdp"
-            android:layout_marginStart="@dimen/_80sdp"
             android:background="@drawable/background_subtitle_indicator">
         </View>
     </LinearLayout>
@@ -39,19 +38,19 @@
             android:layout_weight="1">
 
             <View
-            android:id="@+id/viewColor1"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:background="@drawable/background_note_color_1" />
+                android:id="@+id/viewColor1"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:background="@drawable/background_note_color_1" />
 
             <ImageView
-            android:id="@+id/imageColor1"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:contentDescription="@string/app_name"
-            android:padding="@dimen/_10sdp"
-            android:src="@drawable/ic_done"
-            app:tint="@color/colorWhite" />
+                android:id="@+id/imageColor1"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/_10sdp"
+                android:src="@drawable/ic_done"
+                app:tint="@color/colorWhite" />
 
         </FrameLayout>
 
@@ -139,14 +138,14 @@
             android:src="@drawable/ic_color_palette"
             app:tint="@color/colorIcons" />
 
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:includeFontPadding="false"-->
-<!--            android:text="@string/pick_color"-->
-<!--            android:textColor="@color/colorWhite"-->
-<!--            android:textSize="@dimen/_13ssp"-->
-<!--            android:textStyle="bold" />-->
+        <!--        <TextView-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:includeFontPadding="false"-->
+        <!--            android:text="@string/pick_color"-->
+        <!--            android:textColor="@color/colorWhite"-->
+        <!--            android:textSize="@dimen/_13ssp"-->
+        <!--            android:textStyle="bold" />-->
 
     </LinearLayout>
 
@@ -164,7 +163,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_note_subtitle"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,7 +189,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_add_image"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -218,7 +215,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_web_link"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -245,7 +241,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_export_file"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -272,7 +267,6 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/ic_share"
             app:tint="@color/colorIcons" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -303,7 +297,6 @@
             android:src="@drawable/ic_delete"
             app:tint="@color/colorDelete"
             android:contentDescription="@string/app_name" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -311,8 +304,18 @@
             android:includeFontPadding="false"
             android:text="Delete Note"
             android:textColor="@color/colorDelete"
-            android:textSize="@dimen/_12ssp"/>
+            android:textSize="@dimen/_12ssp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/app_name"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/_13ssp"/>
 
 </LinearLayout>
