@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.activities.MainActivity;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
 import com.makeramen.roundedimageview.RoundedImageView;

@@ -32,15 +32,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.bhaskar.corvasnotes.NavigationUtil;
 import com.bhaskar.corvasnotes.R;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
+import com.bhaskar.corvasnotes.note.CreateNoteActivity;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -84,11 +82,13 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.action_set :
-                        NavigationUtil.SettingActivity(MainActivity.this);
+                        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, SettingsActivity.class), null);
+                        MainActivity.this.finish();
                         break;
 
                     case R.id.nav_delete :
-//                        NavigationUtil.DeleteActivity(MainActivity.this);
+                        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, DeleteActivity.class), null);
+                        MainActivity.this.finish();
                         break;
 
                     default :
@@ -151,33 +151,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-
-//        //        Day Night Mode switch
-//        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
-//        lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                if (isSwitchOn) {
-////                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-////                    lottieSwitchButton.playAnimation();
-////                    isSwitchOn = false;
-////                } else {
-////                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-////                    lottieSwitchButton.playAnimation();
-////                    isSwitchOn = true;
-////                }
-//                if (isNightModeOn) {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                    sharedPrefsEdit.putBoolean("Night Mode",false);
-//                    sharedPrefsEdit.apply();
-//                } else {
-//                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                    sharedPrefsEdit.putBoolean("Night Mode",true);
-//                    sharedPrefsEdit.apply();
-//                }
-//
-//            }
-//        });
 
 //      Clear Search content clicking Cross button
         ImageView clearSearch = findViewById(R.id.clearSearch);

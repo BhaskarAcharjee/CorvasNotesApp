@@ -2,6 +2,7 @@ package com.bhaskar.corvasnotes.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,9 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Toolbar toolbarSettings = findViewById(R.id.toolbar_setting);
+        setSupportActionBar(toolbarSettings);
 
 
 //        SharedPrefs for day night

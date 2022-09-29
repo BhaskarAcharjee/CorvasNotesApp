@@ -5,47 +5,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".activities.CreateNoteActivity">
+    tools:context=".note.CreateNoteActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingBottom="@dimen/_50sdp">
+        android:paddingBottom="@dimen/_40sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true">
 
-            <ImageView
-                android:id="@+id/restore_imageBack"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="@dimen/_30sdp"
-                android:layout_marginStart="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_back"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:tint="@color/colorIcons" />
+            <androidx.appcompat.widget.Toolbar
+                app:title="@string/app_name"
+                app:titleTextColor="@color/colorWhite"
+                android:id="@+id/restore_toolbar_note"
+                app:navigationIcon="@drawable/ic_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints" />
 
-            <ImageView
-                android:id="@+id/restore_imageSave"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:background="@drawable/background_done_button"
-                android:contentDescription="@string/app_name"
-                android:padding="@dimen/_4sdp"
-                android:src="@drawable/ic_done"
-                app:layout_constraintBottom_toBottomOf="@id/restore_imageBack"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/restore_imageBack"
-                app:tint="@color/colorIcons" />
 
-            <EditText
+            <TextView
+                android:textStyle="bold"
                 android:id="@+id/restore_inputNoteTitle"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_35sdp"
@@ -53,40 +37,24 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:background="@null"
-                android:hint="@string/note_title"
-                android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:includeFontPadding="false"
-                android:inputType="text"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextHint"
-                android:textSize="@dimen/_18ssp"
-                android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/restore_imageBack" />
+                android:textSize="@dimen/_16ssp"
+                app:layout_constraintTop_toBottomOf="@id/restore_toolbar_note" />
+
 
             <TextView
                 android:id="@+id/restore_textDateTime"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:includeFontPadding="false"
-                android:textColor="@color/colorIcons"
+                android:textColor="@color/colorWhite"
                 android:textSize="@dimen/_10ssp"
-                app:layout_constraintEnd_toEndOf="@+id/restore_inputNoteTitle"
-                app:layout_constraintStart_toStartOf="@+id/restore_inputNoteTitle"
-                app:layout_constraintTop_toBottomOf="@+id/restore_inputNoteTitle" />
+                app:layout_constraintEnd_toEndOf="@id/restore_inputNoteTitle"
+                app:layout_constraintStart_toStartOf="@id/restore_inputNoteTitle"
+                app:layout_constraintTop_toBottomOf="@id/restore_inputNoteTitle" />
 
-            <View
-                android:id="@+id/restore_viewSubtitleIndicator"
-                android:layout_width="@dimen/_5sdp"
-                android:layout_height="0dp"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:background="@drawable/background_subtitle_indicator"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/restore_inputNoteSubtitle"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/restore_inputNoteSubtitle" />
-
-            <EditText
+            <TextView
                 android:id="@+id/restore_inputNoteSubtitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -97,68 +65,38 @@
                 android:hint="@string/note_subtitle"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
-                android:inputType="textMultiLine"
                 android:paddingTop="@dimen/_8sdp"
                 android:paddingBottom="@dimen/_8sdp"
-                android:paddingEnd="@dimen/_20sdp"
-                android:textColor="@color/colorTextSubtitle"
+                android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_13ssp"
-                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/restore_viewSubtitleIndicator"
+                app:layout_constraintStart_toStartOf="@id/restore_viewSubtitleIndicator"
                 app:layout_constraintTop_toBottomOf="@id/restore_textDateTime" />
 
-            <ImageView
-                android:id="@+id/restore_imageRemoveSubtitle"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintTop_toTopOf="@id/restore_inputNoteSubtitle"
-                app:layout_constraintBottom_toBottomOf="@+id/restore_inputNoteSubtitle"
-                app:layout_constraintEnd_toEndOf="@+id/restore_inputNoteSubtitle"
-                android:visibility="gone"
-                app:tint="@color/colorDelete" />
-
-            <ImageView
-                android:id="@+id/restore_imageNote"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <View
+                android:id="@+id/restore_viewSubtitleIndicator"
+                android:layout_width="@dimen/_5sdp"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/app_name"
-                android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/restore_inputNoteSubtitle" />
+                android:background="@drawable/background_subtitle_indicator"
+                app:layout_constraintBottom_toBottomOf="@id/restore_inputNoteSubtitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/restore_inputNoteSubtitle" />
 
-            <ImageView
-                android:id="@+id/restore_imageRemoveImage"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_10sdp"
-                android:background="@drawable/background_delete"
-                android:contentDescription="@string/app_name"
-                android:padding="@dimen/_4sdp"
-                android:src="@drawable/ic_delete"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@id/restore_imageNote"
-                app:layout_constraintTop_toTopOf="@id/restore_imageNote"
-                app:tint="@color/colorWhite" />
 
             <LinearLayout
                 android:id="@+id/restore_layoutWebURL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_12ssp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12ssp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/restore_imageNote">
+                app:layout_constraintTop_toBottomOf="@id/restore_inputNoteSubtitle"
+                tools:ignore="UseCompoundDrawables">
 
                 <TextView
                     android:id="@+id/restore_textWebURL"
@@ -168,18 +106,40 @@
                     android:autoLink="web"
                     android:includeFontPadding="false"
                     android:textSize="@dimen/_13ssp" />
-
                 <ImageView
-                    android:id="@+id/restore_imageRemoveWebURL"
                     android:layout_width="@dimen/_20sdp"
-                    android:contentDescription="@string/app_name"
                     android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_delete"
-                    app:tint="@color/colorDelete" />
+                    android:contentDescription="@string/app_name" />
 
             </LinearLayout>
 
-            <com.bhaskar.corvasnotes.view.NemosoftsText.NemosoftsEditText
+
+            <ImageView
+                app:riv_corner_radius="@dimen/_10sdp"
+                android:id="@+id/restore_imageNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/_12ssp"
+                android:layout_marginTop="@dimen/_12ssp"
+                android:layout_marginEnd="@dimen/_12ssp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/restore_layoutWebURL"/>
+
+            <ImageView
+                android:id="@+id/restore_imageRemoveImage"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="10dp"
+                android:padding="@dimen/_4sdp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/restore_imageNote"
+                app:layout_constraintTop_toTopOf="@+id/restore_imageNote"
+                android:contentDescription="@string/app_name" />
+
+
+
+            <TextView
                 android:id="@+id/restore_inputNote"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -189,19 +149,42 @@
                 android:layout_marginBottom="@dimen/_15sdp"
                 android:background="@null"
                 android:gravity="top"
-                android:hint="@string/input_note"
+                android:hint="@string/type_note_here"
                 android:importantForAutofill="no"
                 android:includeFontPadding="false"
-                android:inputType="textMultiLine"
                 android:minHeight="@dimen/_100sdp"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextHint"
                 android:textSize="@dimen/_13ssp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/restore_layoutWebURL" />
+                app:layout_constraintBottom_toTopOf="@+id/adView_restore"
+                app:layout_constraintTop_toBottomOf="@id/restore_imageNote"/>
+
+
+            <LinearLayout
+                android:paddingTop="@dimen/_10sdp"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:id="@+id/adView_restore"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/restore_inputNote"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+    <TextView
+        android:paddingBottom="@dimen/_6sdp"
+        android:paddingTop="@dimen/_6sdp"
+        android:textAlignment="center"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
+        app:behavior_peekHeight="@dimen/_40sdp"
+        app:layout_behavior="@string/bottom_sheet_behavior"
+        android:layout_width="match_parent"
+        android:text="@string/this_content_is_deleted"
+        android:layout_height="wrap_content"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

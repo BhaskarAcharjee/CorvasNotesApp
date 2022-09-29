@@ -39,15 +39,6 @@
                         android:textSize="@dimen/_20ssp"
                         android:textStyle="bold"
                         android:layout_gravity="center_vertical" />
-
-<!--                    <com.airbnb.lottie.LottieAnimationView-->
-<!--                        android:id="@+id/lottieSwitchButton"-->
-<!--                        app:lottie_rawRes="@raw/day_night_switch"-->
-<!--                        android:layout_width="@dimen/_70sdp"-->
-<!--                        android:layout_height="@dimen/_70sdp"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:layout_marginStart="@dimen/_100sdp"/>-->
-
                 </LinearLayout>
 
 
@@ -128,6 +119,7 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
+
     </com.google.android.material.appbar.AppBarLayout>
 
 

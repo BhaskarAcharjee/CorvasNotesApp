@@ -1,11 +1,10 @@
-package com.bhaskar.corvasnotes.activities;
+package com.bhaskar.corvasnotes.note;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -17,7 +16,6 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -25,14 +23,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.style.BulletSpan;
-import android.text.style.StrikethroughSpan;
-import android.text.style.StyleSpan;
-import android.text.style.UnderlineSpan;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +35,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.database.DeleteDatabase;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.view.NemosoftsText.NemosoftsEditText;
@@ -478,7 +469,7 @@ public class CreateNoteActivity extends AppCompatActivity {
             if (dialogDeleteNote == null) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateNoteActivity.this);
                 View view = LayoutInflater.from(this).inflate(
-                        R.layout.layout_delete_note, (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
+                        R.layout.layout_delete_note_move, (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
                 );
                 builder.setView(view);
                 dialogDeleteNote = builder.create();
@@ -492,11 +483,11 @@ public class CreateNoteActivity extends AppCompatActivity {
                         class DeleteNoteTask extends AsyncTask<Void, Void, Void>
                         {
 
-//                            @Override
-//                            protected void onPreExecute() {
-//                                super.onPreExecute();
-//                                deleteSaveNote();
-//                            }
+                            @Override
+                            protected void onPreExecute() {
+                                super.onPreExecute();
+                                deleteSaveNote();
+                            }
 
                             @Override
                             protected Void doInBackground(Void... voids) {
@@ -530,6 +521,41 @@ public class CreateNoteActivity extends AppCompatActivity {
 
             dialogDeleteNote.show();
         }
+
+    private void deleteSaveNote() {
+        final Note note = new  Note();
+        note.setTitle(inputNoteTitle.getText().toString());
+        note.setSubtitle(inputNoteSubtitle.getText().toString());
+        note.setNoteText(inputNoteText.toHtml());
+        note.setDateTime(textDateTime.getText().toString());
+        note.setColor(selectedNoteColor);
+        note.setImagePath(selectedImagePath);
+
+        if (layoutWebURL.getVisibility() == View.VISIBLE){
+            note.setWebLink(textWebURL.getText().toString());
+        }
+
+        if (alreadyAvailableNote != null){
+            note.setId(alreadyAvailableNote.getId());
+        }
+
+        @SuppressLint("StaticFieldLeak")
+        class  DeleteSaveNoteTask extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DeleteDatabase.getDatabase(getApplicationContext()).noteDao().insertNote(note);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+        new DeleteSaveNoteTask().execute();
+    }
 
     private void setSubtitleIndicatorColor() {
         GradientDrawable gradientDrawable = (GradientDrawable) viewSubtitleIndicator.getBackground();

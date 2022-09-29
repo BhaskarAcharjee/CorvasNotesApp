@@ -49,24 +49,23 @@ public class AboutActivity extends AppCompatActivity {
         website.setText(Constant.website);
         contact.setText(Constant.contact);
 
-
-        ll_share  = findViewById(R.id.ll_share);
-        ll_share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String appName = getPackageName();
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appName)));
-            }
-        });
-
-        ll_rate  = findViewById(R.id.ll_rate);
-        ll_rate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String appName = getPackageName();
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appName)));
-            }
-        });
+//        ll_share  = findViewById(R.id.ll_share);
+//        ll_share.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final String appName = getPackageName();
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appName)));
+//            }
+//        });
+//
+//        ll_rate  = findViewById(R.id.ll_rate);
+//        ll_rate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final String appName = getPackageName();
+//                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=" + appName)));
+//            }
+//        });
 
         TextView version = findViewById(R.id.version);
         version.setText(BuildConfig.VERSION_NAME);
