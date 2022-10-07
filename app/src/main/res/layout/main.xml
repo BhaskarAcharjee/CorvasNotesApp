@@ -142,27 +142,25 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+    <include layout="@layout/layout_more_apps"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/layoutQuickActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@color/colorAccent"
-            android:padding="@dimen/_6sdp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_navigation_menu"
+            android:visibility="gone"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_menu"
+        app:menu="@menu/bottom_appbar_menu"
         app:fabCradleRoundedCornerRadius="@dimen/_40sdp"
         app:fabCradleMargin="@dimen/_8sdp"
         app:fabAlignmentMode="end"

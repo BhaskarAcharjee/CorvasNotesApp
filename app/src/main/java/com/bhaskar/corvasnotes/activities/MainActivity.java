@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.media.AudioTrack;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -39,6 +40,7 @@ import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
 import com.bhaskar.corvasnotes.note.CreateNoteActivity;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -70,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
 
+//        Activity_main_drawer Menu Item Click
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -261,6 +264,41 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     public void setNoteClickedPosition(int noteClickedPosition) {
         this.noteClickedPosition = noteClickedPosition;
+    }
+
+//    Add More Apps BottomSheet Expand
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        final LinearLayout layoutMoreApps = findViewById(R.id.layoutMoreApps);
+        final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMoreApps);
+
+        // collapse clicking layoutMoreApps
+        layoutMoreApps.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        switch (menuItem.getItemId()) {
+            case R.id.quickActionProfile:
+                break;
+
+            case R.id.quickActionApps:
+                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                } else {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+                break;
+
+            case R.id.quickActionAddOns:
+                break;
+
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+        return true;
     }
 
 }

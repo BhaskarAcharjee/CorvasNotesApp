@@ -29,6 +29,9 @@ public class SettingsActivity extends AppCompatActivity {
         final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
         final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
         final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
+        final boolean isSwitchOn = appSettingsPrefs.getBoolean("Switch Mode",true);
+
+        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
 
         if (isNightModeOn){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -36,29 +39,35 @@ public class SettingsActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        if (isSwitchOn){
+            lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+        }else {
+            lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+        }
+        lottieSwitchButton.playAnimation();
+
         //        Day Night Mode switch
-        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
         lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isSwitchOn) {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = false;
-//                } else {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = true;
-//                }
+                if (isSwitchOn) {
+                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+                    sharedPrefsEdit.putBoolean("Switch Mode",false);
+                } else {
+                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+                    sharedPrefsEdit.putBoolean("Switch Mode",true);
+                }
+                lottieSwitchButton.playAnimation();
+                sharedPrefsEdit.apply();
+
                 if (isNightModeOn) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     sharedPrefsEdit.putBoolean("Night Mode",false);
-                    sharedPrefsEdit.apply();
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     sharedPrefsEdit.putBoolean("Night Mode",true);
-                    sharedPrefsEdit.apply();
                 }
+                sharedPrefsEdit.apply();
 
             }
         });
