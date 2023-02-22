@@ -7,15 +7,16 @@ xmlns:app="http://schemas.android.com/apk/res-auto">
     android:title="@string/profile"
     app:showAsAction="ifRoom"/>
 
-<item
-    android:id="@+id/quickActionApps"
-    android:icon="@drawable/ic_quick_apps"
-    android:title="@string/apps"
-    app:showAsAction="ifRoom"/>
+<!--<item-->
+<!--    android:id="@+id/quickActionApps"-->
+<!--    android:icon="@drawable/ic_view"-->
+<!--    android:title="@string/apps"-->
+<!--    app:showAsAction="ifRoom"/>-->
 
-<item
-    android:id="@+id/quickActionAddOns"
-    android:icon="@drawable/ic_quick_add_ons"
-    android:title="@string/add_ons"
-    app:showAsAction="ifRoom"/>
+<!--<item-->
+<!--    android:id="@+id/quickActionAddOns"-->
+<!--    android:icon="@drawable/ic_quick_add_ons"-->
+<!--    android:title="@string/add_ons"-->
+<!--    app:showAsAction="ifRoom"/>-->
+
 </menu>

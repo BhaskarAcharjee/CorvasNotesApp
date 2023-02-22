@@ -10,13 +10,13 @@
     android:background="@drawable/background_note">
 
 <!--        for full page color just comment-out the
-                            id/layoutNotePageCurl linearlayout -->
+                            id/layoutNotePageCurl linearlayout background -->
         <LinearLayout
             android:id="@+id/layoutNotePageCurl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/page_curl"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/page_curl">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageNote"

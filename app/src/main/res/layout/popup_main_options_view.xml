@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:includeFontPadding="false"
-            android:text="Options"
+            android:text="View"
             android:gravity="center"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
@@ -38,48 +38,55 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/favouriteNote"
+            android:id="@+id/viewGridLarge"
+            android:onClick="clickViewGridLarge"
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_favourite_note"
+            android:src="@drawable/ic_view"
             android:scaleType="center"
             app:tint="@color/colorWhite"
             android:background="?android:selectableItemBackground">
         </ImageButton>
 
         <ImageButton
-            android:id="@+id/lockNote"
+            android:id="@+id/viewGridMedium"
+            android:onClick="clickViewGridMedium"
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_lock_note"
+            android:src="@drawable/ic_view"
             android:scaleType="center"
             app:tint="@color/colorWhite"
             android:background="?android:selectableItemBackground">
         </ImageButton>
 
         <ImageButton
-            android:id="@+id/sharedNote"
+            android:id="@+id/viewGridUniform"
+            android:onClick="clickViewGridUniform"
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_shared_notes"
+            android:src="@drawable/ic_view"
             android:scaleType="center"
             app:tint="@color/colorWhite"
             android:background="?android:selectableItemBackground">
         </ImageButton>
 
         <ImageButton
-            android:id="@+id/folderNote"
+            android:id="@+id/viewList"
+            android:onClick="clickViewList"
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_folder"
+            android:src="@drawable/ic_view"
             android:scaleType="center"
             app:tint="@color/colorWhite"
             android:background="?android:selectableItemBackground">
         </ImageButton>
+
+
+
 
     </LinearLayout>
 
@@ -94,8 +101,8 @@
         android:gravity="center">
 
         <ImageButton
-            android:id="@+id/viewNote"
-            android:onClick="clickViewNote"
+            android:id="@+id/viewFullColor"
+
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
@@ -106,38 +113,19 @@
         </ImageButton>
 
         <ImageButton
-            android:id="@+id/recycleBinNote"
-            android:onClick="clickRecycleBin"
+            android:id="@+id/viewCurlColor"
+
             android:contentDescription="@null"
             android:layout_width="@dimen/_40sdp"
             android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_view"
             android:scaleType="center"
             app:tint="@color/colorWhite"
             android:background="?android:selectableItemBackground">
         </ImageButton>
 
-        <ImageButton android:id="@+id/tagsNote"
-            android:contentDescription="@null"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_tags"
-            android:scaleType="center"
-            app:tint="@color/colorWhite"
-            android:background="?android:selectableItemBackground">
-        </ImageButton>
 
-        <ImageButton
-            android:id="@+id/settingsNote"
-            android:onClick="clickSettingsNote"
-            android:contentDescription="@null"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_settings"
-            android:scaleType="center"
-            app:tint="@color/colorWhite"
-            android:background="?android:selectableItemBackground">
-        </ImageButton>
+
 
     </LinearLayout>
 
