@@ -97,9 +97,7 @@ public class DeleteActivity extends AppCompatActivity implements NotesListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_ADD_NOTE && resultCode == RESULT_OK){
-//            getNotes(REQUEST_CODE_ADD_NOTE,false);
-//        }else if (requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
+        if(requestCode == REQUEST_CODE_UPDATE_NOTE && resultCode == RESULT_OK){
             if (data != null) {
                 getNotes(REQUEST_CODE_UPDATE_NOTE,data.getBooleanExtra("isNoteDeleted",true));
             }

@@ -14,6 +14,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             app:contentScrim="@color/colorPrimary"
             app:expandedTitleTextAppearance="@style/expandedBarTextStyle"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
@@ -51,19 +52,19 @@
                     android:background="@drawable/background_search"
                     android:orientation="horizontal"
                     android:visibility="gone"
-                    android:gravity="center"
                     android:layout_gravity="bottom">
 
                     <ImageView
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:layout_gravity="center"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_search"
                         app:tint="@color/colorSearchIcon" />
                     <EditText
                         android:id="@+id/inputSearch"
-                        android:layout_width="@dimen/_218sdp"
+                        android:layout_width="@dimen/_230sdp"
                         android:layout_height="@dimen/_35sdp"
                         android:layout_marginStart="@dimen/_8sdp"
                         android:background="@null"
@@ -79,9 +80,10 @@
                         android:id="@+id/clearSearch"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_gravity="center"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_clear_search"
-                        android:layout_marginStart="@dimen/_8sdp"
                         android:visibility="gone"
                         app:tint="@color/colorSearchIcon" />
                 </LinearLayout>
@@ -142,27 +144,25 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutSearch" />
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+    <include layout="@layout/layout_more_apps"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/layoutQuickActions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@color/colorAccent"
-            android:padding="@dimen/_6sdp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_gravity="bottom"
+            app:menu="@menu/bottom_navigation_menu"
+            android:visibility="gone"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_menu"
+        app:menu="@menu/bottom_appbar_menu"
         app:fabCradleRoundedCornerRadius="@dimen/_40sdp"
         app:fabCradleMargin="@dimen/_8sdp"
         app:fabAlignmentMode="end"

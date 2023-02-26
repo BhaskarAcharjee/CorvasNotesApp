@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.SharedPref.SharedPref;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -26,39 +27,52 @@ public class SettingsActivity extends AppCompatActivity {
 
 
 //        SharedPrefs for day night
-        final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
-        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
-        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
+//        final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
+//        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
+//        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
+//        final boolean isSwitchOn = appSettingsPrefs.getBoolean("Switch Mode",true);
 
-        if (isNightModeOn){
+        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
+        SharedPref sharedPref = new SharedPref(this);
+        if (sharedPref.isNightModeOn()){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
+        if (sharedPref.isSwitchOn()){
+            lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+        }else {
+            lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+        }
+        lottieSwitchButton.playAnimation();
+
         //        Day Night Mode switch
-        final LottieAnimationView lottieSwitchButton = findViewById(R.id.lottieSwitchButton);
         lottieSwitchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (isSwitchOn) {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = false;
-//                } else {
-//                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
-//                    lottieSwitchButton.playAnimation();
-//                    isSwitchOn = true;
-//                }
-                if (isNightModeOn) {
+                if (sharedPref.isSwitchOn()) {
+                   lottieSwitchButton.setMinAndMaxProgress(0.5f, 1.0f); // Light Mode To Dark Mode animation
+//                   sharedPrefsEdit.putBoolean("Switch Mode",false);
+                    sharedPref.setSwitchMode(false);
+                } else {
+                    lottieSwitchButton.setMinAndMaxProgress(0.0f, 0.4f); // Dark Mode To Light Mode animation
+//                    sharedPrefsEdit.putBoolean("Switch Mode",true);
+                    sharedPref.setSwitchMode(true);
+                }
+                lottieSwitchButton.playAnimation();
+//                sharedPrefsEdit.apply();
+
+                if (sharedPref.isNightModeOn()) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    sharedPrefsEdit.putBoolean("Night Mode",false);
-                    sharedPrefsEdit.apply();
+//                    sharedPrefsEdit.putBoolean("Night Mode",false);
+                    sharedPref.setNightMode(false);
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    sharedPrefsEdit.putBoolean("Night Mode",true);
-                    sharedPrefsEdit.apply();
+//                    sharedPrefsEdit.putBoolean("Night Mode",true);
+                    sharedPref.setNightMode(true);
                 }
+//                sharedPrefsEdit.apply();
 
             }
         });

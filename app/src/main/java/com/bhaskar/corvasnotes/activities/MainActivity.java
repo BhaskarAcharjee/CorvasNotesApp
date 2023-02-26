@@ -9,13 +9,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,11 +35,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.SharedPref.SharedPref;
 import com.bhaskar.corvasnotes.adapters.NotesAdapter;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
 import com.bhaskar.corvasnotes.listeners.NotesListener;
 import com.bhaskar.corvasnotes.note.CreateNoteActivity;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
@@ -58,8 +61,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     boolean isSwitchOn = false;
 
-    private ImageButton buttonPopupMainOptions;
-    Dialog dialogPopupMainOptions;
+    private ImageButton buttonPopupMainOptions,buttonPopupViewOptions;
+    Dialog dialogPopupMainOptions,dialogPopupViewOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
 
+//        Activity_main_drawer Menu Item Click
         DrawerLayout drawer =  findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -110,16 +114,17 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 REQUEST_CODE_ADD_NOTE
         ));
 
+//        Recycler View Notes
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
-        notesRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        notesRecyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         noteList = new ArrayList<>();
         notesAdapter = new NotesAdapter(noteList,this);
         notesRecyclerView.setAdapter(notesAdapter);
 
         getNotes(REQUEST_CODE_SHOW_NOTE,false);
-
+//      Search Notes
         EditText inputSearch = findViewById(R.id.inputSearch);
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -142,11 +147,12 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         });
 
 //        Set Preference for light Dark Mode (Previous Selection)
-        final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
-        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
-        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
+//        final SharedPreferences appSettingsPrefs = getSharedPreferences("App Settings",0);
+//        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
+//        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
 
-        if (isNightModeOn){
+        SharedPref sharedPref = new SharedPref(this);
+        if (sharedPref.isNightModeOn()){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -175,7 +181,8 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
                 }
             }
         });
-//      Popup Main Options
+
+    //      Popup Main Options
         dialogPopupMainOptions = new Dialog(MainActivity.this);
         dialogPopupMainOptions.setContentView(R.layout.popup_main_options);
         dialogPopupMainOptions.getWindow().setBackgroundDrawable(new ColorDrawable(0));
@@ -193,8 +200,21 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         WindowManager.LayoutParams layoutParams = window.getAttributes();
         layoutParams.gravity = Gravity.TOP;
         window.setAttributes(layoutParams);
-    }
 
+        //      Popup View Options
+        dialogPopupViewOptions = new Dialog(MainActivity.this);
+        dialogPopupViewOptions.setContentView(R.layout.popup_main_options_view);
+        dialogPopupViewOptions.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        dialogPopupViewOptions.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        Window window1 = dialogPopupViewOptions.getWindow();
+        WindowManager.LayoutParams layoutParams1 = window1.getAttributes();
+        layoutParams1.gravity = Gravity.TOP;
+        window1.setAttributes(layoutParams1);
+
+
+    }
+//  On Note Clicked Update Note
     @Override
     public void onNoteClicked(Note note, int position) {
         noteClickedPosition = position;
@@ -262,5 +282,68 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     public void setNoteClickedPosition(int noteClickedPosition) {
         this.noteClickedPosition = noteClickedPosition;
     }
+
+//    Add More Apps BottomSheet Expand
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        final LinearLayout layoutMoreApps = findViewById(R.id.layoutMoreApps);
+        final BottomSheetBehavior<LinearLayout> bottomSheetBehavior = BottomSheetBehavior.from(layoutMoreApps);
+
+        // collapse clicking layoutMoreApps
+        layoutMoreApps.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            }
+        });
+
+        switch (menuItem.getItemId()) {
+            case R.id.quickActionProfile:
+                ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, AboutActivity.class), null);
+//                MainActivity.this.finish();
+                break;
+
+//            case R.id.quickActionApps:
+//                if (bottomSheetBehavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                } else {
+//                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                }
+//                break;
+//
+//            case R.id.quickActionAddOns:
+//                break;
+
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+        return true;
+    }
+// On Click Main pop up options
+    public void clickSettingsNote(View view) {
+        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, SettingsActivity.class), null);
+        MainActivity.this.finish();
+    }
+     public void clickRecycleBin(View view) {
+        ActivityCompat.startActivity(MainActivity.this, new Intent(MainActivity.this, DeleteActivity.class), null);
+        MainActivity.this.finish();
+    }
+    public void clickViewNote(View view) {
+        dialogPopupViewOptions.show();
+        dialogPopupMainOptions.hide();
+    }
+    public void clickViewGridLarge(View view){
+        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+    }
+    public void clickViewGridMedium(View view){
+        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+    }
+    public void clickViewGridUniform(View view){
+        notesRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+    }
+    public void clickViewList(View view){
+        notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
 
 }
