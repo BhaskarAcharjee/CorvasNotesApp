@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 
     private ImageButton buttonPopupMainOptions,buttonPopupViewOptions;
     Dialog dialogPopupMainOptions,dialogPopupViewOptions;
+    private SharedPref sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,12 +153,27 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
 //        final SharedPreferences.Editor sharedPrefsEdit = appSettingsPrefs.edit();
 //        final boolean isNightModeOn = appSettingsPrefs.getBoolean("Night Mode",true);
 
-        SharedPref sharedPref = new SharedPref(this);
+        // Initialize SharedPreferences
+        sharedPref = new SharedPref(this);
+
         if (sharedPref.isNightModeOn()){
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+
+        // Retrieve layout preference
+        String layoutPreference = sharedPref.getLayoutPreference();
+//        setLayoutManager(layoutPreference);
+            if (layoutPreference.equals("gridLarge")) {
+                notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+            } else if (layoutPreference.equals("gridMedium")) {
+                notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+            } else if (layoutPreference.equals("gridUniform")) {
+                notesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+            } else {
+                notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            }
 
 //      Clear Search content clicking Cross button
         ImageView clearSearch = findViewById(R.id.clearSearch);
@@ -333,17 +349,25 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
         dialogPopupViewOptions.show();
         dialogPopupMainOptions.hide();
     }
-    public void clickViewGridLarge(View view){
-        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
+    // Update layout preference on click events
+    public void clickViewGridLarge(View view) {
+        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        sharedPref.setLayoutPreference("gridLarge");
     }
-    public void clickViewGridMedium(View view){
-        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
+
+    public void clickViewGridMedium(View view) {
+        notesRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
+        sharedPref.setLayoutPreference("gridMedium");
     }
-    public void clickViewGridUniform(View view){
-        notesRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
+
+    public void clickViewGridUniform(View view) {
+        notesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        sharedPref.setLayoutPreference("gridUniform");
     }
-    public void clickViewList(View view){
+
+    public void clickViewList(View view) {
         notesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        sharedPref.setLayoutPreference("list");
     }
 
 

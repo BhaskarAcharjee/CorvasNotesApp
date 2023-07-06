@@ -33,4 +33,13 @@ public class SharedPref {
         sharedPrefsEdit.apply();
     }
 
+    public String getLayoutPreference() {
+        return appSettingsPrefs.getString("Layout Preference", "gridLarge");
+    }
+
+    public void setLayoutPreference(String layout) {
+        sharedPrefsEdit.putString("Layout Preference", layout);
+        sharedPrefsEdit.apply();
+    }
+
 }
