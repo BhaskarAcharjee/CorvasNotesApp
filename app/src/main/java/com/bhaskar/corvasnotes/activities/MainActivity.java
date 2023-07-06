@@ -18,6 +18,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
@@ -346,4 +347,6 @@ public class MainActivity extends AppCompatActivity implements NotesListener {
     }
 
 
+    public void setSketchUri(Uri uri) {
+    }
 }

@@ -54,4 +54,31 @@
     <string name="restore">Restore</string>
     <string name="delete">Delete</string>
     <string name="type_note_here">Type Note Here</string>
+
+    <string name="stroke">Stroke</string>
+    <string name="eraser">Eraser</string>
+    <string name="colors">Colors</string>
+    <string name="erase_sketch">Erase Sketch</string>
+    <string name="stroke_size">Stroke Size</string>
+    <string name="saturation">Saturation</string>
+    <string name="opacity">Opacity</string>
+
+    <array name="operation_icon">
+        <item>"brush"</item>
+        <item>"eraser"</item>
+        <item>"color_pallet"</item>
+        <item>"cancel"</item>
+<!--        <item>"text_input"</item>-->
+        <item>"undo"</item>
+        <item>"redo"</item>
+<!--        <item>"circleimg"</item>-->
+<!--        <item>"square"</item>-->
+<!--        <item>"oval"</item>-->
+<!--        <item>"gallery"</item>-->
+        <item>"save"</item>
+    </array>
+    <string name="file_name">"File name"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="toast_sketch">Sketch</string>
 </resources>

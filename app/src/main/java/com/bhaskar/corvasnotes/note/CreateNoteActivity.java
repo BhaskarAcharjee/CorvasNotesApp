@@ -7,6 +7,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -34,7 +37,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bhaskar.corvasnotes.Fragments.SketchFragment;
 import com.bhaskar.corvasnotes.R;
+import com.bhaskar.corvasnotes.activities.DrawingBoard;
 import com.bhaskar.corvasnotes.database.DeleteDatabase;
 import com.bhaskar.corvasnotes.database.NotesDatabase;
 import com.bhaskar.corvasnotes.entities.Note;
@@ -54,7 +59,7 @@ public class CreateNoteActivity extends AppCompatActivity {
     private TextView textWebURL;
     private LinearLayout layoutWebURL;
     private NemosoftsEditText inputNoteText;
-    private ImageButton bold, italic, underline, strikethrough, bullet, quote, clear;
+    private ImageButton bold, italic, underline, strikethrough, bullet, quote, clear, sketch;
 
     private View viewSubtitleIndicator, textMiscellaneous;
     private String selectedNoteColor;
@@ -94,6 +99,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         bullet = (ImageButton) findViewById(R.id.bullet);
         quote = (ImageButton) findViewById(R.id.quote);
         clear = (ImageButton) findViewById(R.id.clear);
+        sketch = (ImageButton) findViewById(R.id.sketch);
 
 
         inputNoteText.setSelection(inputNoteText.getEditableText().length());
@@ -236,6 +242,24 @@ public class CreateNoteActivity extends AppCompatActivity {
             @Override
             public boolean onLongClick(View v) {
                 Toast.makeText(CreateNoteActivity.this, R.string.toast_format_clear, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+
+        sketch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(CreateNoteActivity.this, DrawingBoard.class);
+                startActivity(i);
+//                Fragment sketchFragment = new SketchFragment();
+//                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//                fragmentTransaction.replace(R.id.containerLayout,sketchFragment).commit();
+            }
+        });
+        sketch.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(CreateNoteActivity.this, R.string.toast_sketch, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -715,5 +739,4 @@ public class CreateNoteActivity extends AppCompatActivity {
 //
 //    public void formatBullet(View view) {
 //    }
-
 }

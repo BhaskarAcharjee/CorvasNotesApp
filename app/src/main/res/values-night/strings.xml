@@ -46,4 +46,20 @@
     <string name="restore">Restore</string>
     <string name="delete">Delete</string>
     <string name="type_note_here">Type Note Here</string>
+
+    <array name="operation_icon">
+        <item>"brush"</item>
+        <item>"eraser"</item>
+        <item>"color_pallet"</item>
+        <item>"cancel"</item>
+        <item>"text_input"</item>
+        <item>"undo"</item>
+        <item>"circle"</item>
+        <item>"square"</item>
+        <item>"oval"</item>
+        <item>"gallery"</item>
+        <item>"save"</item>
+    </array>
+    <string name="file_name">"File name"</string>
+    <string name="toast_sketch">Sketch</string>
 </resources>

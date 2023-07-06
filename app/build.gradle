@@ -21,10 +21,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures{
+        dataBinding = true
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
 }
 
 dependencies {
@@ -50,5 +57,7 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
     // Lottie dependency
     implementation "com.airbnb.android:lottie:3.4.0"
+//    Color Picker
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
 
 }

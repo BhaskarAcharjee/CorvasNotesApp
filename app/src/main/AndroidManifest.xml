@@ -29,6 +29,9 @@
             android:name=".activities.AboutActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.DrawingBoard"
+            android:exported="false" />
+        <activity
             android:name=".note.CreateNoteActivity"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -40,7 +43,6 @@
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

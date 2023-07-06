@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/containerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".note.CreateNoteActivity">
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -284,12 +289,21 @@
                 android:background="?android:selectableItemBackground">
             </ImageButton>
 
-
             <ImageButton android:id="@+id/clear"
                 android:contentDescription="@null"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:src="@drawable/ic_format_clear"
+                android:scaleType="center"
+                android:background="?android:selectableItemBackground"
+                app:tint="@color/colorWhite">
+            </ImageButton>
+
+            <ImageButton android:id="@+id/sketch"
+                android:contentDescription="@null"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_brush_icon"
                 android:scaleType="center"
                 android:background="?android:selectableItemBackground"
                 app:tint="@color/colorWhite">
@@ -328,5 +342,6 @@
         </LinearLayout>
 
     </HorizontalScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</FrameLayout>
